@@ -27,6 +27,7 @@ if ( SERVER ) then
 	util.AddNetworkString( "mb_Char" );
 	util.AddNetworkString( "mb_Equip" );
 	util.AddNetworkString( "mb_Spell" );
+	util.AddNetworkString( "mb_UpdateMousePos" )
 end
 
 local function loadCoreGame( dir )

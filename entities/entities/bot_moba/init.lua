@@ -1,3 +1,5 @@
+AddCSLuaFile("shared.lua")
+include("shared.lua")
 ENT.Base 		= "base_nextbot";
 
 ENT.HP     		 = 100;
@@ -203,6 +205,7 @@ function ENT:Attack()
 	local sequence = char.AttackAnim;
 	
 	char.OnAttack( self:GetOwner(), self, self:GetEnemy(), char.AttackDmg );
+	print("Player " .. self:GetOwner():Nick() .. " has attacked " .. self:GetEnemy():GetOwner():Nick() .. " for " .. char.AttackDmg)
 	
 	self:PlaySequenceAndWait( sequence, 1.0 );
 	self.moba.nextattack = CurTime() + char.AttackTime;
@@ -216,7 +219,9 @@ function ENT:OnInjured( dmginfo )
 	local damage = dmginfo:GetBaseDamage();
 	
 	self:SetHealth( self:Health() - damage );
+	print(self:GetOwner():Nick() .. " has taken " .. damage)
 	if ( self:Health() <= 0 ) then
+		print(self:GetOwner():Nick() .. " has died.")
 		self:Remove();
 	end
 end

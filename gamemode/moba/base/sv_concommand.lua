@@ -1,7 +1,7 @@
 
 local function ccCastSpell( ply, cmd, args )
 	local slot = tonumber( args[1] );
-	print( slot );
+	print("spell slot " .. slot .. " casted.");
 	
 	if ( ply:HasSpell( slot ) ) then
 		ply:CastSpell( slot );

@@ -1,4 +1,3 @@
-
 function GM:Initialize()
 	moba = {};
 		moba.character = "";
@@ -16,9 +15,17 @@ function GM:Initialize()
 	gui.EnableScreenClicker( true );
 end
 
+local filledcircle = draw.NewCircle(CIRCLE_FILLED)
+local circletab = {
+	[1] = filledcircle,
+	[2] = filledcircle:Copy(),
+	[3] = filledcircle:Copy(),
+	[4] = filledcircle:Copy(),
+}
 function GM:HUDPaint()
 	local x, y = ScrW() / 2, ScrH() / 2;
 	local mx, my = gui.MouseX(), gui.MouseY();
+	local spells = moba.spells;
 	
 	if ( mx > (x * 1.98) ) then
 		moba.viewoffset = moba.viewoffset - Vector( 0, moba.camIncriment, 0 );
@@ -34,17 +41,23 @@ function GM:HUDPaint()
 	
 	for i = 1, 4 do
 		local dist = i * 100;
-		dist = dist + (x * 0.60);
-		draw.RoundedBox( 0, dist, y * 1.79, x * 0.12, y * 0.20, Color( 60, 60, 60, 120 ) );
+		dist = dist + (x * 0.65);
+
+		circletab[i]:SetPos(dist + 50, (y * 1.79) + 50)
+		circletab[i]:SetRadius(x * 0.05)
+		circletab[i](Color(0, 255, 0))
+
+		draw.RoundedBox( 0, dist, y * 1.79, x * 0.10, y * 0.20, Color( 60, 60, 60, 120 ) );
 		
 		local txt = MOBA.Characters[ moba.character ].Spells[i] or i;
+		txt = string.gsub(txt, "^%l", string.upper)
 		local col = Color( 255, 255, 255, 255 );
 		
 		if ( moba.spells[ i ].cooldown > RealTime() ) then
 			col = Color( 60, 60, 60, 255 );
 		end
 		
-		draw.DrawText( txt, "Default", dist + (x * 0.06), y * 1.88, col, TEXT_ALIGN_CENTER );
+		draw.DrawText( txt, "Default", dist + (x * 0.05), y * 1.88, col, TEXT_ALIGN_CENTER );
 	end
 end
 
@@ -63,18 +76,30 @@ function GM:CalcView( ply, pos, ang, fov )
 	return view;
 end
 
+local function _castSpell(slot)
+	local spells = moba.spells;
+	if ( !spells[slot] || spells[slot].spell == "" || RealTime() < spells[slot].cooldown ) then return; end
+	
+	//PrintTable( spells[slot] );
+	local time = MOBA.Spells[ spells[slot].spell ].Cooldown;
+	if ( !time ) then return; end
+	
+	RunConsoleCommand( "mb_cast", slot );
+	spells[slot].cooldown = RealTime() + time;
+end
+
 //Mouse Movements
 function GM:Think()
 	if ( CurTime() > moba.waypointDelay ) then
 		if ( input.IsMouseDown( MOUSE_RIGHT ) ) then //Moving
 			local vector = gui.ScreenToVector( gui.MouseX(), gui.MouseY() ) * 99;
 			local tr = util.QuickTrace( moba.campos, moba.campos + (vector * 10000), LocalPlayer() );
-			
+
 			net.Start( "mb_GoPos" );
 				net.WriteVector( tr.HitPos );
 			net.SendToServer();
 			
-			moba.waypointDelay = CurTime() + 0.4; //Stops them from spamming, also max age of bot path
+			moba.waypointDelay = CurTime() + 0.2; //Stops them from spamming, also max age of bot path
 		elseif ( input.IsMouseDown( MOUSE_LEFT ) ) then //Attacking
 			local vector = gui.ScreenToVector( gui.MouseX(), gui.MouseY() ) * 99;
 			local tr = util.QuickTrace( moba.campos, moba.campos + (vector * 10000), LocalPlayer() );
@@ -85,9 +110,12 @@ function GM:Think()
 				net.SendToServer();
 				
 				moba.target = tr.Entity;
+			else
+				moba.target = nil
+				return
 			end
 			
-			moba.waypointDelay = CurTime() + 0.4; //Stops them from spamming, also max age of bot path
+			moba.waypointDelay = CurTime() + 0.2; //Stops them from spamming, also max age of bot path
 		end
 	end
 	
@@ -111,32 +139,14 @@ function GM:Think()
 		moba.camZoom = moba.camZoom - moba.camIncriment;
 	end
 	
-	local spells = moba.spells;
-	
 	if ( input.IsKeyDown( KEY_1 ) ) then
-		if ( !spells[1] || spells[1].spell == "" || RealTime() < spells[1].cooldown ) then return; end
-		
-		RunConsoleCommand( "mb_cast", "1" );
-		spells[1].cooldown = RealTime() + MOBA.Spells[ spells[1].spell ].Cooldown;
+		_castSpell(1)
 	elseif ( input.IsKeyDown( KEY_2 ) ) then
-		if ( !spells[2] || spells[2].spell == "" || RealTime() < spells[2].cooldown ) then return; end
-		
-		PrintTable( spells[2] );
-		local time = MOBA.Spells[ spells[2] ].Cooldown;
-		if ( !time ) then return; end
-		
-		RunConsoleCommand( "mb_cast", "2" );
-		spells[2].cooldown = RealTime() + time;
+		_castSpell(2)
 	elseif ( input.IsKeyDown( KEY_3 ) ) then
-		if ( !spells[3] || spells[3].spell == "" || RealTime() < spells[3].cooldown ) then return; end
-		
-		RunConsoleCommand( "mb_cast", "3" );
-		spells[3].cooldown = RealTime() + MOBA.Spells[ spells[3].spell ].Cooldown;
+		_castSpell(3)
 	elseif ( input.IsKeyDown( KEY_4 ) ) then
-		if ( !spells[4] || spells[4].spell == "" || RealTime() < spells[4].cooldown ) then return; end
-		
-		RunConsoleCommand( "mb_cast", "4" );
-		spells[4].cooldown = RealTime() + MOBA.Spells[ spells[4].spell ].Cooldown;
+		_castSpell(4)
 	end
 end
 
@@ -161,3 +171,10 @@ hook.Add( "HUDShouldDraw", "HeistHidHUD", HideHUD );
 function GM:ShouldDrawLocalPlayer( ply )
 	return true;
 end
+
+local function DrawHalos()
+	if moba.target then
+		halo.Add({moba.target}, Color(255, 0, 0), 0, 0, 4, true, true)
+	end
+end
+hook.Add("PreDrawHalos", "EnemyHalo", DrawHalos)

@@ -7,7 +7,7 @@ CHARACTER.Weapon		= "weapon_pistol";
 
 CHARACTER.AttackAnim	= "shootp1";
 CHARACTER.AttackTime	= 0.5;
-CHARACTER.AttackDmg		= 20; 
+CHARACTER.AttackDmg		= 20 * 4; 
 
 CHARACTER.Speed			= 180;
 
@@ -19,10 +19,10 @@ CHARACTER.Equipment = {
 };
 
 CHARACTER.Spells	= {
-	[1] = "",
-	[2] = "",
-	[3] = "",
-	[4] = ""
+	[1] = "flash",
+	[2] = "flash",
+	[3] = "flash",
+	[4] = "flash"
 };
 
 CHARACTER.OnDeath	= function( ply, bot )
@@ -36,9 +36,9 @@ CHARACTER.OnAttack	= function( ply, bot, enemy, dmg )
 		bullet.Num 		  = 1;
 		bullet.Src 		  = bot:EyePos();
 		bullet.Dir 		  = bot:GetForward() * 32;
-		bullet.Spread 	  = Vector(spread, spread, 0);
+		bullet.Spread 	  = Vector(0, 0, 0);
 		bullet.Tracer	  = 1;
-		bullet.TracerName = TracerName;
+		bullet.TracerName = "GaussTracer";
 		bullet.Force	  = dmg * 0.5;
 		bullet.Damage	  = dmg;
 		bullet.AmmoType   = "pistol";

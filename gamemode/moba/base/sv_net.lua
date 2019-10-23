@@ -12,3 +12,11 @@ local function mb_Attak( len, ply )
 	ply:AttackTarget( target );
 end
 net.Receive( "mb_Attak", mb_Attak );
+
+local function mb_UpdateMousePos(len, ply)
+	local pos = net.ReadVector()
+	ply.MousePos = pos
+	//print("ply mouse pos is: ")
+	//print(ply.MousePos)
+end
+net.Receive("mb_UpdateMousePos", mb_UpdateMousePos)

@@ -122,14 +122,15 @@ function ENT:AttackEnemy()
 		//do damage to enemy here
 		self:EmitSound( "npc/manhack/grind1.wav" );
 		
-		/*local enemy = self:Enemy();
+		local enemy = self:Enemy();
 		enemy:SetHealth( enemy:Health() - 5 );
 		if ( enemy:Health() <= 0 ) then
 			enemy:Remove();
 			owner:SetEnemy( nil );
-		end*/
+		end
 		
 		self.moba.nextattack = CurTime() + 1.2;
+		print(self:GetOwner():Nick() .. "'s manhack dealt " .. 5)
 		//self:SetMode( MODE_FOLLOW );
 	end
 end

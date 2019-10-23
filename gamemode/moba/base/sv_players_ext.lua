@@ -34,7 +34,7 @@ function meta:AssignBot()
 	self:Spectate( OBS_MODE_FIXED );
 	self:SpectateEntity( nextbot );
 	
-	GAMEMODE:SetPlayerSpeed( self, 0.01, 0.01 );
+	//GAMEMODE:SetPlayerSpeed( self, 0.01, 0.01 ); deprecated
 	
 	self.moba.bot	= nextbot;
 	
@@ -89,7 +89,24 @@ function meta:CastSpell( slot )
 	spell = MOBA.Spells[ spell[slot] ];
 	
 	if ( !spell ) then return; end
-	spell.OnCast( self.moba.bot );
+	if spell.Range and self.moba.bot:GetPos():DistToSqr(self.MousePos) > spell.Range * spell.Range then 
+		print("out of range! casting at max range... ") 
+
+		local arct = math.atan(self.MousePos.x / self.MousePos.y)
+		arct = arct * 57.2958 // 1 radian to 57.2958 degrees
+		local xpos = math.sin(arct) * spell.Range
+		local ypos = math.cos(arct) * spell.Range
+
+
+		spell.OnCast( self.moba.bot, direction );
+		self.moba.spells[ slot ] = CurTime() + spell.Cooldown;
+		
+		local seq = spell.Sequence;
+		self:GetBot():CastSpell( seq );
+
+		return
+	end
+	spell.OnCast( self.moba.bot,  self.MousePos);
 	
 	self.moba.spells[ slot ] = CurTime() + spell.Cooldown;
 	
@@ -116,3 +133,21 @@ function meta:HasSpell( slot )
 	local char = self:GetCharacterDetails();
 	return char.Spells[ slot ];
 end
+
+function meta:HasPassive(name)
+	// passive key is the string name, and the value is a table
+	// use passives later but this is just cause
+	local char = self:GetCharacterDetails()
+	return char.Passives[name]
+end
+
+/*function meta:GetAimDirection()
+	local direction = self:GetBot():GetPos() - self.MousePos
+	return direction
+end
+
+function meta:GetAimPosition()
+	net.Start("mb_UpdateMousePos")
+	net.Send(self)
+	print("getting ply " .. self:Nick() .. " aim position - sv")
+end*/
