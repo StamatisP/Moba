@@ -18,7 +18,7 @@ ROLE_HEAL		= 2;
 
 //Teams
 team.SetUp( TEAM_BLUE, "Blue guys", Color( 255, 127, 0, 255 ) );
-team.SetUp( TEAM_RED, "Red guys", Color( 60, 60, 60, 255 ) );
+team.SetUp( TEAM_RED, "Red guys", Color( 160, 60, 60, 255 ) );
 
 if ( SERVER ) then
 	util.AddNetworkString( "mb_Bot" );
@@ -29,6 +29,7 @@ if ( SERVER ) then
 	util.AddNetworkString( "mb_Spell" );
 	util.AddNetworkString( "mb_UpdateMousePos" )
 end
+util.PrecacheModel("models/props_c17/oildrum001_explosive.mdl")
 
 local function loadCoreGame( dir )
 	

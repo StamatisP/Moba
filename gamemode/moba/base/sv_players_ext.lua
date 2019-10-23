@@ -93,12 +93,12 @@ function meta:CastSpell( slot )
 		print("out of range! casting at max range... ") 
 
 		local arct = math.atan(self.MousePos.x / self.MousePos.y)
-		arct = arct * 57.2958 // 1 radian to 57.2958 degrees
-		local xpos = math.sin(arct) * spell.Range
-		local ypos = math.cos(arct) * spell.Range
+		arct = math.deg(arct) // 1 radian to 57.2958 degrees
+		local xpos = (math.sin(arct) * spell.Range) + self:GetPos().x
+		local ypos = (math.cos(arct) * spell.Range) + self:GetPos().y
+		local desired_pos = Vector(xpos, ypos, self.MousePos.z)
 
-
-		spell.OnCast( self.moba.bot, direction );
+		spell.OnCast( self.moba.bot, desired_pos );
 		self.moba.spells[ slot ] = CurTime() + spell.Cooldown;
 		
 		local seq = spell.Sequence;

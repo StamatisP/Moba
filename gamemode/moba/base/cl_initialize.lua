@@ -110,12 +110,11 @@ function GM:Think()
 				net.SendToServer();
 				
 				moba.target = tr.Entity;
+				moba.waypointDelay = CurTime() + 0.2; //Stops them from spamming, also max age of bot path
 			else
 				moba.target = nil
-				return
 			end
 			
-			moba.waypointDelay = CurTime() + 0.2; //Stops them from spamming, also max age of bot path
 		end
 	end
 	

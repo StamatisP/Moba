@@ -31,6 +31,7 @@ local function mb_Spell( len )
 end
 net.Receive( "mb_Spell", mb_Spell );
 
+local testmodel = ClientsideModel("models/props_c17/oildrum001_explosive.mdl")
 local function mb_UpdateMousePos()
 	local vector = gui.ScreenToVector( gui.MouseX(), gui.MouseY() ) * 99;
 	local tr = util.QuickTrace( moba.campos, moba.campos + (vector * 10000), LocalPlayer() );
@@ -39,6 +40,14 @@ local function mb_UpdateMousePos()
 	net.Start("mb_UpdateMousePos")
 		net.WriteVector(tr.HitPos)
 	net.SendToServer()
+	//testmodel:SetPos(tr.HitPos)
+	local arct = math.atan(tr.HitPos.y , tr.HitPos.x)
+	arct = math.deg(arct) // 1 radian to 57.2958 degrees
+	local xpos = (math.sin(arct) * LocalPlayer():GetPos():Distance(tr.HitPos)) + LocalPlayer():GetPos().x
+	local ypos = (math.cos(arct) * LocalPlayer():GetPos():Distance(tr.HitPos)) + LocalPlayer():GetPos().y
+	local desired_pos = Vector(xpos, ypos, tr.HitPos.z)
+
+	testmodel:SetPos(desired_pos)
 	//print("sending ply aim position - cl")
 end
 //net.Receive("mb_UpdateMousePos", mb_UpdateMousePos)
