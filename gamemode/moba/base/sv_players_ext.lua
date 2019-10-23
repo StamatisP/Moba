@@ -3,59 +3,15 @@ if ( !meta ) then return; end
 
 function meta:Initialize()
 	self.moba = {};
-		self.moba.bot = nil;
 		self.moba.character = "";
 		self.moba.spells = {}; //This is used for ONLY cooldowns
+		self.moba.pet = nil
 		
 	self:SetCharacter( "alyx_vance" );
 	self:SetTeam( TEAM_BLUE );
-	self:SetCollisionGroup( COLLISION_GROUP_WEAPON );
-	self:SetMoveType( MOVETYPE_NONE );
-	self:SetModel( "models/Player.mdl" );
-	self:DrawViewModel( false );
-	self:SetJumpPower( 0 );
-end
-
-function meta:AssignBot()
-	if ( self.moba.bot ) then return; end
-	
-	local nextbot = ents.Create( "bot_moba" );
-	nextbot:SetPos( self:GetPos() );
-	nextbot:SetOwner( self );
-	nextbot:Spawn();
-	nextbot:Activate();
-	//nextbot:SetTeam( self:Team() );
-	
-	net.Start( "mb_Bot" );
-		net.WriteEntity( nextbot );
-	net.Send( self );
-	
-	self:SetParent( nextbot );
-	self:Spectate( OBS_MODE_FIXED );
-	self:SpectateEntity( nextbot );
-	
-	//GAMEMODE:SetPlayerSpeed( self, 0.01, 0.01 ); deprecated
-	
-	self.moba.bot	= nextbot;
-	
-	local char = self:GetCharacterDetails();
-	if ( !char ) then return; end
-	char.OnInitialize( self, nextbot );
-	
-	nextbot:SetModel( char.Model );
-	nextbot:SetSpeed( char.Speed );
-	nextbot:EquipWeapon( char.Weapon );
-end
-
-function meta:SetWaypoint( pos )
-	if ( !self:GetBot() ) then return; end
-	
-	self:GetBot():SetWaypoint( pos );
-end
-
-function meta:AttackTarget( ent )
-	if ( !self:GetBot() ) then return; end
-	self:GetBot():AttackTarget( ent );
+	self:SetModel( "models/Alyx.mdl" );
+	self:DrawViewModel( true );
+	self:SetJumpPower( 200 );
 end
 
 function meta:SetCharacter( char )
@@ -83,39 +39,18 @@ function meta:SetCharacter( char )
 end
 
 function meta:CastSpell( slot )
-	if ( !self.moba.bot || (self.moba.spells[ slot ] && CurTime() < self.moba.spells[ slot ]) ) then return; end
+	if ( (self.moba.spells[ slot ] && CurTime() < self.moba.spells[ slot ]) ) then return; end
 	local char = self:GetCharacterDetails();
 	local spell = char.Spells;
 	spell = MOBA.Spells[ spell[slot] ];
 	
 	if ( !spell ) then return; end
-	if spell.Range and self.moba.bot:GetPos():DistToSqr(self.MousePos) > spell.Range * spell.Range then 
-		print("out of range! casting at max range... ") 
-
-		local arct = math.atan(self.MousePos.x / self.MousePos.y)
-		arct = math.deg(arct) // 1 radian to 57.2958 degrees
-		local xpos = (math.sin(arct) * spell.Range) + self:GetPos().x
-		local ypos = (math.cos(arct) * spell.Range) + self:GetPos().y
-		local desired_pos = Vector(xpos, ypos, self.MousePos.z)
-
-		spell.OnCast( self.moba.bot, desired_pos );
-		self.moba.spells[ slot ] = CurTime() + spell.Cooldown;
-		
-		local seq = spell.Sequence;
-		self:GetBot():CastSpell( seq );
-
-		return
-	end
-	spell.OnCast( self.moba.bot,  self.MousePos);
+	spell.OnCast( self, self:EyeAngles());
 	
 	self.moba.spells[ slot ] = CurTime() + spell.Cooldown;
 	
-	local seq = spell.Sequence;
-	self:GetBot():CastSpell( seq );
-end
-
-function meta:GetBot()
-	return self.moba.bot;
+	//local seq = spell.Sequence;
+	//self:GetBot():CastSpell( seq );
 end
 
 function meta:GetCharacter()

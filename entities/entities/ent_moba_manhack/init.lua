@@ -20,9 +20,10 @@ function ENT:Initialize()
 	self:SetMode( MODE_FOLLOW );
 	self:SetMoveType( MOVETYPE_FLY );
 	self:PhysicsInit( SOLID_VPHYSICS );
-	self:SetCollisionGroup( COLLISION_GROUP_WEAPON );
-	self:SetSolid( SOLID_NONE );
+	self:SetCollisionGroup( COLLISION_GROUP_NONE );
+	self:SetSolid( SOLID_VPHYSICS );
 	self:Activate();
+	self.soundid = self:StartLoopingSound("npc/manhack/mh_engine_loop1.wav")
 	//self:SetModelScale( 0.95, 0 );
 	
 	self:PlaySequence( "Deploy" );
@@ -67,6 +68,8 @@ function ENT:OnRemove()
 	if ( !owner ) then return; end
 	
 	self:EmitSound( "npc/manhack/gib.wav" );
+	self:StopLoopingSound(self.soundid)
+	if not owner.moba then return end
 	owner.moba.pet = nil;
 end
 
@@ -116,7 +119,7 @@ function ENT:AttackEnemy()
 		dir = dir * 0.8;
 	end
 	
-	phys:ApplyForceCenter( dir * 4 );
+	phys:ApplyForceCenter( dir * 6 );
 	
 	if ( pos:Distance( offset ) <= 30 ) then
 		//do damage to enemy here
@@ -124,12 +127,8 @@ function ENT:AttackEnemy()
 		
 		local enemy = self:Enemy();
 		enemy:SetHealth( enemy:Health() - 5 );
-		if ( enemy:Health() <= 0 ) then
-			enemy:Remove();
-			owner:SetEnemy( nil );
-		end
 		
-		self.moba.nextattack = CurTime() + 1.2;
+		self.moba.nextattack = CurTime() + 0.6;
 		print(self:GetOwner():Nick() .. "'s manhack dealt " .. 5)
 		//self:SetMode( MODE_FOLLOW );
 	end
@@ -138,10 +137,36 @@ end
 function ENT:PhysicsCollide()
 end
 
+local function GetAlivePlayers()
+	local alivePlayers = {}
+	for k, v in ipairs(player.GetAll()) do
+		if v:Alive() then table.insert(alivePlayers, v) end
+	end
+
+	return alivePlayers
+end
+
+function ENT:FindPlayer()
+	self.closestdist = nil
+	self.closestplayer = nil
+	for k, v in ipairs(GetAlivePlayers()) do
+		if v == self:GetOwner() then continue end
+		local dist = self:GetPos():DistToSqr(v:GetPos())
+		if dist >= 500 * 500 then continue end
+		if not self.closestdist then
+			self.closestdist = dist
+		end
+		if dist <= self.closestdist then
+			self.closestplayer = v
+		end
+	end
+	if self.closestplayer then self:SetMode(MODE_ATTACK) end
+	return self.closestplayer
+end
+
 function ENT:Enemy()
 	if ( !IsValid( self.moba.enemy ) ) then
-		local owner = self:GetOwner();
-		return owner:GetEnemy();
+		return self:FindPlayer()
 	end
 	return nil;
 end

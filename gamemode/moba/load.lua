@@ -17,17 +17,19 @@ ROLE_DPS		= 1;
 ROLE_HEAL		= 2;
 
 //Teams
-team.SetUp( TEAM_BLUE, "Blue guys", Color( 255, 127, 0, 255 ) );
-team.SetUp( TEAM_RED, "Red guys", Color( 160, 60, 60, 255 ) );
+function GM:CreateTeams()
+	team.SetUp( TEAM_BLUE, "Blue guys", Color( 255, 127, 0, 255 ) );
+	team.SetUp( TEAM_RED, "Red guys", Color( 160, 60, 60, 255 ) );
+end
 
 if ( SERVER ) then
-	util.AddNetworkString( "mb_Bot" );
 	util.AddNetworkString( "mb_GoPos" );
 	util.AddNetworkString( "mb_Attak" );
 	util.AddNetworkString( "mb_Char" );
 	util.AddNetworkString( "mb_Equip" );
 	util.AddNetworkString( "mb_Spell" );
-	util.AddNetworkString( "mb_UpdateMousePos" )
+	util.AddNetworkString("mb_StartCharacterPick")
+	util.AddNetworkString("mb_SendCharacterPick")
 end
 util.PrecacheModel("models/props_c17/oildrum001_explosive.mdl")
 
