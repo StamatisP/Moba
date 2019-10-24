@@ -2,14 +2,15 @@ CHARACTER.Name			= "Metro Police";
 CHARACTER.Icon			= "";
 CHARACTER.Role			= ROLE_DPS;
 CHARACTER.Range			= 48;
-CHARACTER.Model			= "models/Police.mdl";
+CHARACTER.Model			= "models/player/police.mdl";
 CHARACTER.Weapon		= "weapon_stunstick";
+CHARACTER.Health 		= 200
 
 CHARACTER.AttackAnim	= "swing";
 CHARACTER.AttackTime	= 0.6;
 CHARACTER.AttackDmg		= 3;
 
-CHARACTER.Speed			= 180;
+CHARACTER.Speed			= 1.4;
 
 CHARACTER.Equipment = { 
 	["head"] = "",

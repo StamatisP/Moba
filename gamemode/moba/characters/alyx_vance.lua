@@ -2,11 +2,12 @@ CHARACTER.Name			= "Alyx Vance";
 CHARACTER.Icon			= "";
 CHARACTER.Role			= ROLE_HEAL;
 CHARACTER.Model			= "models/player/alyx.mdl";
-CHARACTER.Weapon		= "weapon_pistol";
+CHARACTER.Weapon		= "weapon_alyx_gun";
+CHARACTER.Health 		= 200
 
 CHARACTER.AttackDmg		= 20 * 4; 
 
-CHARACTER.Speed			= 220;
+CHARACTER.Speed			= 1.8; // this is a multiplier
 
 CHARACTER.Equipment = { 
 	["head"] = "",
@@ -16,7 +17,7 @@ CHARACTER.Equipment = {
 };
 
 CHARACTER.Spells	= {
-	[1] = "",
+	[1] = "flash",
 	[2] = "",
 	[3] = "",
 	[4] = ""

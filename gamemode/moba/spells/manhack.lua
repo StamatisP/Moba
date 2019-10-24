@@ -4,6 +4,8 @@ SPELL.Range		= -1;
 SPELL.Sequence	= "canal5breact2"; //What sequence/animation should it play
 SPELL.Cooldown	= 8;
 
+SPELL.Description = "Spawns a Manhack pet that chases down enemies."
+
 SPELL.OnInitalize = function()
 end
 

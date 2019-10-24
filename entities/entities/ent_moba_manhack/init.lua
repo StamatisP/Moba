@@ -124,9 +124,15 @@ function ENT:AttackEnemy()
 	if ( pos:Distance( offset ) <= 30 ) then
 		//do damage to enemy here
 		self:EmitSound( "npc/manhack/grind1.wav" );
+		local edata = EffectData()
+		edata:SetOrigin(offset)
+		util.Effect("BloodImpact", edata)
 		
 		local enemy = self:Enemy();
-		enemy:SetHealth( enemy:Health() - 5 );
+		enemy:SetHealth( enemy:Health() - 10 );
+		if enemy:Health() <= 0 then
+			enemy:Kill()
+		end
 		
 		self.moba.nextattack = CurTime() + 0.6;
 		print(self:GetOwner():Nick() .. "'s manhack dealt " .. 5)

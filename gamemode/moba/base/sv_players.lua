@@ -17,11 +17,11 @@ end
 
 function GM:PlayerSpawn( ply )
 	local char = ply:GetCharacterDetails()
-	print(char.Name)
-	ply:SetMaxSpeed(char.Speed)
 	ply:StripWeapons()
 	ply:Give(char.Weapon)
 	ply:SetModel(char.Model)
+	ply:SetMaxHealth(char.Health)
+	ply:SetHealth(char.Health)
 	ply:SetupHands()
 end
 

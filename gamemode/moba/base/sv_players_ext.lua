@@ -48,20 +48,6 @@ function meta:CastSpell( slot )
 	spell.OnCast( self, self:EyeAngles());
 	
 	self.moba.spells[ slot ] = CurTime() + spell.Cooldown;
-	
-	//local seq = spell.Sequence;
-	//self:GetBot():CastSpell( seq );
-end
-
-function meta:GetCharacter()
-	return self.moba.character;
-end
-
-function meta:GetCharacterDetails()
-	local char = self:GetCharacter();
-	if ( !MOBA.Characters[ char ] ) then return nil; end
-	
-	return MOBA.Characters[ char ];
 end
 
 function meta:HasSpell( slot )
@@ -75,14 +61,3 @@ function meta:HasPassive(name)
 	local char = self:GetCharacterDetails()
 	return char.Passives[name]
 end
-
-/*function meta:GetAimDirection()
-	local direction = self:GetBot():GetPos() - self.MousePos
-	return direction
-end
-
-function meta:GetAimPosition()
-	net.Start("mb_UpdateMousePos")
-	net.Send(self)
-	print("getting ply " .. self:Nick() .. " aim position - sv")
-end*/

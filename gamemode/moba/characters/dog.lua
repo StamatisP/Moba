@@ -1,15 +1,15 @@
 CHARACTER.Name			= "DOG";
 CHARACTER.Icon			= "";
 CHARACTER.Role			= ROLE_TANK;
-CHARACTER.Range			= 80;
 CHARACTER.Model			= "models/dog.mdl";
 CHARACTER.Weapon		= nil;
+CHARACTER.Health 		= 600
 
 CHARACTER.AttackAnim	= "pound";
 CHARACTER.AttackTime	= 0.6;
 CHARACTER.AttackDmg		= 30; 
 
-CHARACTER.Speed			= 220;
+CHARACTER.Speed			= 0.8;
 
 CHARACTER.Equipment = { 
 	["head"] = "",
