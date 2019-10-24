@@ -16,6 +16,10 @@ net.Receive( "mb_Attak", mb_Attak );
 local function mb_SendCharacterPick(len, ply)
 	local char = net.ReadString()
 	ply:SetCharacter(char)
+	local theteam = team.BestAutoJoinTeam()
+	ply:SetTeam(theteam)
+	print(ply:Nick() .. " has joined team " .. theteam)
+	ply:UnSpectate()
 	ply:Spawn()
 end
 net.Receive("mb_SendCharacterPick", mb_SendCharacterPick)

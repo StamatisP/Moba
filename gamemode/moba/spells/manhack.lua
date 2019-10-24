@@ -9,20 +9,20 @@ SPELL.Description = "Spawns a Manhack pet that chases down enemies."
 SPELL.OnInitalize = function()
 end
 
-SPELL.OnCast	= function( bot )
-	if ( bot.moba.pet ) then 
-		bot.moba.pet:Remove();
-		bot.moba.pet = nil;
+SPELL.OnCast	= function( ply )
+	if ( ply.moba.pet ) then 
+		ply.moba.pet:Remove();
+		ply.moba.pet = nil;
 	end
 	
-	local pos = bot:GetPos() + Vector( 0, 0, 64 );
-	pos = pos + ( bot:GetForward() * 12 );
+	local pos = ply:GetPos() + Vector( 0, 0, 64 );
+	pos = pos + ( ply:GetForward() * 12 );
 	
 	local manhack = ents.Create( "ent_moba_manhack" );
 	manhack:SetPos( pos );
 	manhack:Spawn();
 	manhack:Activate();
-	manhack:SetOwner( bot );
+	manhack:SetOwner( ply );
 	
-	bot.moba.pet = manhack;
+	ply.moba.pet = manhack;
 end

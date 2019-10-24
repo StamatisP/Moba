@@ -129,10 +129,12 @@ function ENT:AttackEnemy()
 		util.Effect("BloodImpact", edata)
 		
 		local enemy = self:Enemy();
-		enemy:SetHealth( enemy:Health() - 10 );
-		if enemy:Health() <= 0 then
-			enemy:Kill()
-		end
+		local info = DamageInfo()
+		info:SetDamage(5)
+		info:SetAttacker(self:GetOwner())
+		info:SetInflictor(self)
+		info:SetDamageType(DMG_SLASH)
+		enemy:TakeDamageInfo(info)
 		
 		self.moba.nextattack = CurTime() + 0.6;
 		print(self:GetOwner():Nick() .. "'s manhack dealt " .. 5)
@@ -141,15 +143,6 @@ function ENT:AttackEnemy()
 end
 
 function ENT:PhysicsCollide()
-end
-
-local function GetAlivePlayers()
-	local alivePlayers = {}
-	for k, v in ipairs(player.GetAll()) do
-		if v:Alive() then table.insert(alivePlayers, v) end
-	end
-
-	return alivePlayers
 end
 
 function ENT:FindPlayer()

@@ -1,0 +1,17 @@
+SPELL.Name		= "Dash";
+SPELL.Icon		= "";
+SPELL.Range		= 600;
+//SPELL.Sequence	= "canal5breact2"; //What sequence/animation should it play
+SPELL.Cooldown	= 1;
+
+SPELL.Description = "Dashes you forward " .. SPELL.Range .. " units."
+
+SPELL.OnInitalize = function()
+end
+
+SPELL.OnCast	= function( ply, target )
+	if not ply then print("no ply!") return end
+	local desired_pos = ply:GetAimVector()
+	desired_pos:Mul(MOBA.Spells["dash"].Range)
+	ply:SetVelocity(desired_pos)
+end

@@ -9,6 +9,8 @@ CHARACTER.AttackDmg		= 20 * 4;
 
 CHARACTER.Speed			= 1.8; // this is a multiplier
 
+CHARACTER.Description 	= "A figurehead for the Resistance, Alyx is a highly mobile damage dealer, whose weapon can change into an SMG, pistol, or rifle."
+
 CHARACTER.Equipment = { 
 	["head"] = "",
 	["chest"] = "",
@@ -17,7 +19,7 @@ CHARACTER.Equipment = {
 };
 
 CHARACTER.Spells	= {
-	[1] = "flash",
+	[1] = "dash",
 	[2] = "",
 	[3] = "",
 	[4] = ""
@@ -26,7 +28,7 @@ CHARACTER.Spells	= {
 CHARACTER.OnDeath	= function( ply )
 end
 
-CHARACTER.OnInitialize 	= function( ply, bot )
+CHARACTER.OnInitialize 	= function( ply )
 end
 
 CHARACTER.OnAttack	= function( ply, bot, enemy, dmg )

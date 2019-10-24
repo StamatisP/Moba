@@ -1,16 +1,13 @@
 CHARACTER.Name			= "Metro Police";
 CHARACTER.Icon			= "";
 CHARACTER.Role			= ROLE_DPS;
-CHARACTER.Range			= 48;
 CHARACTER.Model			= "models/player/police.mdl";
 CHARACTER.Weapon		= "weapon_stunstick";
 CHARACTER.Health 		= 200
 
-CHARACTER.AttackAnim	= "swing";
-CHARACTER.AttackTime	= 0.6;
-CHARACTER.AttackDmg		= 3;
+CHARACTER.Description 	= "A human volunteer that decided to side with the Combine. They stun and disorient players."
 
-CHARACTER.Speed			= 1.4;
+CHARACTER.Speed			= 1.2;
 
 CHARACTER.Equipment = { 
 	["head"] = "",
@@ -26,10 +23,10 @@ CHARACTER.Spells	= {
 	[4] = ""
 };
 
-CHARACTER.OnDeath	= function( ply, bot )
+CHARACTER.OnDeath	= function( ply )
 end
 
-CHARACTER.OnInitialize 	= function( ply, bot )
+CHARACTER.OnInitialize 	= function( ply )
 end
 
 CHARACTER.OnAttack	= function( ply, bot, enemy )

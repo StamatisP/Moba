@@ -6,12 +6,6 @@ function meta:Initialize()
 		self.moba.character = "";
 		self.moba.spells = {}; //This is used for ONLY cooldowns
 		self.moba.pet = nil
-		
-	self:SetCharacter( "alyx_vance" );
-	self:SetTeam( TEAM_BLUE );
-	self:SetModel( "models/Alyx.mdl" );
-	self:DrawViewModel( true );
-	self:SetJumpPower( 200 );
 end
 
 function meta:SetCharacter( char )
@@ -45,7 +39,7 @@ function meta:CastSpell( slot )
 	spell = MOBA.Spells[ spell[slot] ];
 	
 	if ( !spell ) then return; end
-	spell.OnCast( self, self:EyeAngles());
+	spell.OnCast( self, self:GetPos());
 	
 	self.moba.spells[ slot ] = CurTime() + spell.Cooldown;
 end
@@ -60,4 +54,17 @@ function meta:HasPassive(name)
 	// use passives later but this is just cause
 	local char = self:GetCharacterDetails()
 	return char.Passives[name]
+end
+
+function meta:ResetSpellCD(slot)
+	local char = self:GetCharacterDetails()
+	local spell = char.Spells
+	spell = MOBA.Spells[ spell[slot] ]
+	if not spell then return end
+	self.moba.spells[slot] = CurTime()
+	timer.Simple(0.2, function()
+		net.Start("mb_ResetSpellCD")
+			net.WriteUInt(slot, 4)
+		net.Send(self)
+	end)
 end

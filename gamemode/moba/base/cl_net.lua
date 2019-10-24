@@ -25,3 +25,13 @@ local function mb_StartCharacterPick(len)
 	RunConsoleCommand("mb_charmenu")
 end
 net.Receive("mb_StartCharacterPick", mb_StartCharacterPick)
+
+local function mb_ResetSpellCD(len)
+	local spells = moba.spells;
+	local slot = net.ReadUInt(4)
+	if ( !spells[slot] || spells[slot].spell == "" ) then return end
+	print("resetting spell cd")
+
+	spells[slot].cooldown = RealTime()
+end
+net.Receive("mb_ResetSpellCD", mb_ResetSpellCD)
