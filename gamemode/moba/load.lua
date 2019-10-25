@@ -18,8 +18,8 @@ ROLE_HEAL		= 2;
 
 //Teams
 function GM:CreateTeams()
-	team.SetUp( TEAM_BLUE, "Blue guys", Color( 52, 107, 235, 255 ) );
-	team.SetUp( TEAM_RED, "Red guys", Color( 235, 52, 52, 255 ) );
+	team.SetUp( TEAM_BLUE, "Blue Team", Color( 52, 107, 235, 255 ) );
+	team.SetUp( TEAM_RED, "Red Team", Color( 235, 52, 52, 255 ) );
 	team.SetUp( TEAM_SPECTATOR, "Spectators", Color( 160, 60, 60, 255 ) );
 end
 
@@ -33,7 +33,6 @@ if ( SERVER ) then
 	util.AddNetworkString("mb_SendCharacterPick")
 	util.AddNetworkString("mb_ResetSpellCD")
 end
-util.PrecacheModel("models/props_c17/oildrum001_explosive.mdl")
 
 local function loadCoreGame( dir )
 	

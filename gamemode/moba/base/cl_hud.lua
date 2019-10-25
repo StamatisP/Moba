@@ -72,7 +72,8 @@ local function PostPlayerDraw(ply)
 
 	if ( dist < 1000 * 1000 ) then --If the distance is less than 1000 units, it will draw the name
 
-		local offset = Vector( 0, 0, 85 )
+		local mins, maxs = ply:GetModelBounds()
+		local offset = maxs + Vector( -5, -15, -10 )
 		local ang = LocalPlayer():EyeAngles()
 		local pos = ply:GetPos() + offset + ang:Up()
 

@@ -26,13 +26,15 @@ SPELL.OnCast	= function( ply, target )
 		timer.Simple(1.1, function()
 			//local desired_pos = ply:GetAimVector()
 			local desired_pos = ply:GetEyeTrace().HitPos
-			local dir = (ply.moba.pet:GetPos() - desired_pos) * -1
-			print("throwing ball")
-			ballphys:EnableMotion(true)
-			ply.moba.pet:EmitSound("Weapon_AR2.Double")
-			//desired_pos:Mul(MOBA.Spells["throw_ball"].Range)
-			dir:Mul(2)
-			ballphys:SetVelocity(dir)
+			if desired_pos then
+				local dir = (ply.moba.pet:GetPos() - desired_pos) * -1
+				print("throwing ball")
+				ballphys:EnableMotion(true)
+				ply.moba.pet:EmitSound("Weapon_AR2.Double")
+				//desired_pos:Mul(MOBA.Spells["throw_ball"].Range)
+				dir:Mul(2)
+				ballphys:SetVelocity(dir)
+			end
 		end)
 	end
 end
