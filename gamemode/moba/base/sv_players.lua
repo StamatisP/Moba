@@ -10,6 +10,7 @@ end
 function GM:PlayerInitialSpawn( ply )
 	//ply:SetTeam( TEAM_BLUE );
 	ply:Initialize()
+	ply.RespawnTime = CurTime()
 	ply:SetTeam(TEAM_SPECTATOR)
 end
 
@@ -94,6 +95,14 @@ function GM:PlayerSay(sender, text, teamchat)
 		end
 		return ""
 	end
+end
+
+function GM:PlayerDeath(victim, inflictor, attacker)
+	print(attacker)
+	if not attacker:IsPlayer() and attacker:GetOwner() then attacker = attacker:GetOwner() end
+	local char = attacker:GetCharacterDetails()
+	if not char then return end
+	char.OnKill(attacker, victim)
 end
 
 /*function GM:Think()

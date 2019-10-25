@@ -17,7 +17,6 @@ local function CreateCharMenu()
 	local chardesc
 	for k, v in pairs(MOBA.Characters) do
 		print(k)
-		print(v)
 		local item = list:Add("DModelPanel")
 		item:SetModel(v.Model)
 		item:SetSize(100, 100)

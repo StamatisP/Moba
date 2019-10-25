@@ -10,7 +10,8 @@ SPELL.OnInitalize = function()
 end
 
 SPELL.OnCast	= function( ply )
-	if ( ply.moba.pet ) then 
+	if ( ply.moba.pet ) then
+		print("player already has a manhack!")
 		ply.moba.pet:Remove();
 		ply.moba.pet = nil;
 	end

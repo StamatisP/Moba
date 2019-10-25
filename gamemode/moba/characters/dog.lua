@@ -6,10 +6,8 @@ CHARACTER.Weapon		= nil;
 CHARACTER.Health 		= 600
 
 CHARACTER.Description 	= "DOG is the loyal friend and bodyguard of Alyx. Hard to kill, and very slow."
-CHARACTER.StepSounds	= {"npc/dog/dog_footstep1.wav",
-							"npc/dog/dog_footstep2.wav",
-							"npc/dog/dog_footstep3.wav",
-							"npc/dog/dog_footstep4.wav"}
+CHARACTER.StepSounds	= VOMakeList("npc/dog/dog_footstep#.wav", 4)
+CHARACTER.RunSounds 	= VOMakeList("npc/dog/dog_footstep_run#.wav", 8)
 
 CHARACTER.Speed			= 0.8;
 
@@ -27,7 +25,24 @@ CHARACTER.Spells	= {
 	[4] = "dog_slam"
 };
 
+// sad is for dying, happy is for winning/kill streaks, angry is for losing
+CHARACTER.VoiceOver = {
+	sad = {
+		[1] = "npc/dog/dog_scared1.wav",
+		[2] = "npc/dog/dog_disappointed.wav",
+		[3] = "npc/dog/dog_alarmed3.wav"
+	},
+	happy = {
+		[1] = "npc/dog/dog_laugh1.wav",
+		[2] = "npc/dog/dog_growl2.wav",
+		[3] = "npc/dog/dog_growl3.wav"
+	},
+	angry = VOMakeList("npc/dog/dog_angry#.wav", 3)
+}
+PrintTable(CHARACTER.VoiceOver)
+
 CHARACTER.OnDeath	= function( ply, bot )
+	ply:EmitSound(RandomVO("dog", "sad"))
 end
 
 CHARACTER.OnInitialize 	= function( ply )
@@ -46,4 +61,8 @@ CHARACTER.OnInitialize 	= function( ply )
 	ball:SetOwner( ply )
 	
 	ply.moba.pet = ball
+end
+
+CHARACTER.OnKill = function(ply, victim)
+	ply:EmitSound(RandomVO("dog", "happy"))
 end

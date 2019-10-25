@@ -26,5 +26,5 @@ local function PlayMusic()
 		timer.Adjust("PlayMusic", music_duration)
 	end)
 end
-hook.Add("MBRoundStart", "Test", PlayMusic)
+//hook.Add("MBRoundStart", "Test", PlayMusic)
 //hook.Run("MBRoundStart")

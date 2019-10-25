@@ -4,14 +4,14 @@ SPELL.Range		= 1200;
 //SPELL.Sequence	= "canal5breact2"; //What sequence/animation should it play
 SPELL.Cooldown	= 6;
 
-SPELL.Description = "Grabs a player and throws them " .. SPELL.Range .. " units."
+SPELL.Description = "Grabs a player and throws them."
 
 SPELL.OnInitalize = function()
 end
 
 SPELL.OnCast	= function( ply, tgt )
 	if not ply then print("no ply!!") return end
-	local target = GetClosestPlayer(ply, 250)
+	local target = GetClosestPlayer(ply, 200)
 	if not target then print("no player close enough to throw") return end
 
 	if not IsLookingAt(ply, target) then
@@ -19,7 +19,7 @@ SPELL.OnCast	= function( ply, tgt )
 		return
 	end
 
-	if ply:GetPos():DistToSqr(target:GetPos()) >= 250 * 250 then
+	if ply:GetPos():DistToSqr(target:GetPos()) >= 200 * 200 then
 		print("too far away from the player to throw!")
 		//ply:ResetSpellCD(1)
 		return

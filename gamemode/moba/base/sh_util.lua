@@ -80,3 +80,24 @@ function GetPseudoRandomNumber(max_num)
 
 	return rand
 end
+
+function VOMakeList(str, n1, n2) // from parakeets pill pack!
+    if not n2 then
+        n2 = n1
+        n1 = 1
+    end
+
+    local lst = {}
+
+    for i = n1, n2 do
+        table.insert(lst, string.Replace(str, "#", tostring(i)))
+    end
+
+    return lst
+end
+
+function RandomVO(char, emotion)
+	local vo = MOBA.Characters[char].VoiceOver[emotion]
+	if not vo then return end
+	return vo[GetPseudoRandomNumber(#vo)]
+end

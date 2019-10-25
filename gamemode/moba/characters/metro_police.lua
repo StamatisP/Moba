@@ -31,3 +31,7 @@ end
 
 CHARACTER.OnAttack	= function( ply, bot, enemy )
 end
+
+CHARACTER.OnKill = function(ply, victim)
+	
+end

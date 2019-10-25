@@ -23,13 +23,13 @@ end
 //Mouse Movements
 function GM:Think()
 	if gui.IsGameUIVisible() then return end
-	if ( input.IsKeyDown( KEY_1 ) ) then
+	if ( input.IsKeyDown( KEY_Q ) ) then
 		_castSpell(1)
-	elseif ( input.IsKeyDown( KEY_2 ) ) then
+	elseif ( input.IsKeyDown( KEY_E ) ) then
 		_castSpell(2)
-	elseif ( input.IsKeyDown( KEY_3 ) ) then
+	elseif ( input.IsKeyDown( KEY_F ) ) then
 		_castSpell(3)
-	elseif ( input.IsKeyDown( KEY_4 ) ) then
+	elseif ( input.IsKeyDown( KEY_R ) ) then
 		_castSpell(4)
 	end
 end
