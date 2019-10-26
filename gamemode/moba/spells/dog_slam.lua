@@ -17,8 +17,7 @@ SPELL.OnCast	= function( ply, tgt )
 	for i = 1, #targets do
 		local enemy = targets[i]
 		enemy:TakeDamage(MOBA.Spells["dog_slam"].Damage, ply, ply)
-		enemy:SetVelocity(Vector(0, 0, math.random(350, 550)))
-		timer.Simple(0.1, function()  end)
+		enemy:SetVelocity(Vector(0, 0, math.random(350, 450)))
 	end
 	ply:EmitSound("physics/concrete/boulder_impact_hard4.wav")
 end

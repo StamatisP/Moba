@@ -1,8 +1,8 @@
-SPELL.Name		= "Dash";
+SPELL.Name		= "Return Ball";
 SPELL.Icon		= "";
 SPELL.Range		= 600;
 //SPELL.Sequence	= "canal5breact2"; //What sequence/animation should it play
-SPELL.Cooldown	= 6;
+SPELL.Cooldown	= 2;
 
 SPELL.Description = "Returns your ball to you."
 

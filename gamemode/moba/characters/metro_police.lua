@@ -18,7 +18,7 @@ CHARACTER.Equipment = {
 
 CHARACTER.Spells	= {
 	[1] = "manhack",
-	[2] = "",
+	[2] = "cityscanner",
 	[3] = "",
 	[4] = ""
 };

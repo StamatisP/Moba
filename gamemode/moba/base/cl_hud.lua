@@ -27,9 +27,16 @@ function GM:HUDPaint()
 
 		draw.RoundedBox( 0, dist, y * 1.79, x * 0.10, y * 0.20, Color( 60, 60, 60, 120 ) );
 		
-		local txt = MOBA.Characters[ moba.character ].Spells[i] or i;
-		txt = string.gsub(txt, "^%l", string.upper)
-		txt = PrettyPrintSpells(txt)
+		local spell_internal = MOBA.Characters[ moba.character ].Spells[i]
+
+		local txt
+		if MOBA.Spells[spell_internal] then
+			txt = MOBA.Spells[spell_internal].Name or i
+		else
+			txt = i
+		end
+		//txt = string.gsub(txt, "^%l", string.upper)
+		//txt = PrettyPrintSpells(txt)
 		local col = Color( 255, 255, 255, 255 );
 		
 		if ( moba.spells[ i ].cooldown > RealTime() ) then
@@ -49,7 +56,7 @@ local function RedDrawTarget()
 		for k, v in pairs(player.GetAll()) do
 			if v == LocalPlayer() or not v:Alive() then continue end
 			if IsLookingAt(LocalPlayer(), v) then
-				if v:GetPos():DistToSqr(LocalPlayer():GetPos()) > 250 * 250 then continue end
+				if v:GetPos():DistToSqr(LocalPlayer():GetPos()) > 200 * 200 then continue end
 				render.MaterialOverride(wMat)
 				render.SetColorModulation(1, 0, 0)
 				v:DrawModel()

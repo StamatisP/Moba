@@ -26,5 +26,11 @@ local function PlayMusic()
 		timer.Adjust("PlayMusic", music_duration)
 	end)
 end
-//hook.Add("MBRoundStart", "Test", PlayMusic)
-//hook.Run("MBRoundStart")
+hook.Add("mb_RoundStart", "Test", PlayMusic)
+
+local function StopMusic()
+	if MusicChannel then
+		MusicChannel:Stop()
+		timer.Destroy("PlayMusic")
+	end
+end

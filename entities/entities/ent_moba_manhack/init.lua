@@ -70,7 +70,7 @@ function ENT:OnRemove()
 	self:EmitSound( "npc/manhack/gib.wav" );
 	self:StopLoopingSound(self.soundid)
 	if not owner.moba then return end
-	owner.moba.pet = nil;
+	owner.moba.pet[self:EntIndex()] = nil
 end
 
 function ENT:FollowBot()

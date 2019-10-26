@@ -2,7 +2,7 @@ SPELL.Name		= "Throw Ball";
 SPELL.Icon		= "";
 SPELL.Range		= 2000;
 //SPELL.Sequence	= "canal5breact2"; //What sequence/animation should it play
-SPELL.Cooldown	= 4;
+SPELL.Cooldown	= 5;
 
 SPELL.Description = "Throws your ball " .. SPELL.Range .. " units."
 
@@ -18,6 +18,7 @@ SPELL.OnCast	= function( ply, target )
 	end
 	local ballphys = ply.moba.pet:GetPhysicsObject()
 	ply.moba.pet:EmitSound("Weapon_CombineGuard.Special1")
+	ply.moba.pet:SetModel("models/roller_spikes.mdl")
 	
 	if ballphys then
 		ballphys:SetVelocity(Vector(0, 0, 400))
@@ -31,8 +32,10 @@ SPELL.OnCast	= function( ply, target )
 				print("throwing ball")
 				ballphys:EnableMotion(true)
 				ply.moba.pet:EmitSound("Weapon_AR2.Double")
+				ply.moba.pet:EmitSound("/npc/roller/mine/rmine_tossed1.wav")
 				//desired_pos:Mul(MOBA.Spells["throw_ball"].Range)
-				dir:Mul(2)
+				dir:Normalize()
+				dir:Mul(1500)
 				ballphys:SetVelocity(dir)
 			end
 		end)

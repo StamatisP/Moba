@@ -5,12 +5,12 @@ function GM:Initialize()
 		moba.character = "";
 		moba.spells = {};
 		moba.equipment = {};
-	hook.Run("MBRoundStart")
 end
 
 local function _castSpell(slot)
 	local spells = moba.spells;
 	if ( !spells[slot] || spells[slot].spell == "" || RealTime() < spells[slot].cooldown ) then return; end
+	if not LocalPlayer():Alive() then return end
 	
 	//PrintTable( spells[slot] );
 	local time = MOBA.Spells[ spells[slot].spell ].Cooldown;
@@ -20,7 +20,6 @@ local function _castSpell(slot)
 	spells[slot].cooldown = RealTime() + time;
 end
 
-//Mouse Movements
 function GM:Think()
 	if gui.IsGameUIVisible() then return end
 	if ( input.IsKeyDown( KEY_Q ) ) then

@@ -5,7 +5,7 @@ function meta:Initialize()
 	self.moba = {};
 		self.moba.character = "";
 		self.moba.spells = {}; //This is used for ONLY cooldowns
-		self.moba.pet = nil
+		self.moba.pet = {} // you can have multiple pets
 end
 
 function meta:SetCharacter( char )
@@ -34,12 +34,15 @@ end
 
 function meta:CastSpell( slot )
 	if ( (self.moba.spells[ slot ] && CurTime() < self.moba.spells[ slot ]) ) then return; end
+	if not self:Alive() then return end
 	local char = self:GetCharacterDetails();
 	local spell = char.Spells;
 	spell = MOBA.Spells[ spell[slot] ];
 	
 	if ( !spell ) then return; end
 	spell.OnCast( self, self:GetPos());
+	//print(slot)
+	//char.OnCast(spell)
 	
 	self.moba.spells[ slot ] = CurTime() + spell.Cooldown;
 end

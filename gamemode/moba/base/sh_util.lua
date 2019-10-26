@@ -22,7 +22,7 @@ end
 
 function IsLookingAt( ply, target )
 	if not target then print("target is nil!") return end
-	local directionAng = math.pi / 5
+	local directionAng = math.pi / 8
 	local aimvector = ply:GetAimVector()
 	-- The vector that goes from the player's shoot pos to the entity's position
 	//print(target:Nick())
@@ -100,4 +100,14 @@ function RandomVO(char, emotion)
 	local vo = MOBA.Characters[char].VoiceOver[emotion]
 	if not vo then return end
 	return vo[GetPseudoRandomNumber(#vo)]
+end
+
+function PetIgnoreOwnTeam(ply, pet)
+	for k, v in ipairs(GetAlivePlayers()) do
+		if v:Team() == ply:Team() then
+			pet:AddEntityRelationship(v, D_LI, 99)
+		else
+			pet:AddEntityRelationship(v, D_HT, 99)
+		end
+	end
 end

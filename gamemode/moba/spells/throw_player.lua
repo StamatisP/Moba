@@ -35,6 +35,8 @@ SPELL.OnCast	= function( ply, tgt )
 		print("throwing player")
 		target:Freeze(false)
 		target:SetMoveType(MOVETYPE_WALK)
+		dir:Normalize()
+		dir:Mul(650)
 		target:SetVelocity(dir)
 	end)
 end

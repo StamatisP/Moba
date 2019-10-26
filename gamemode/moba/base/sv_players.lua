@@ -3,15 +3,15 @@ function GM:Initialize()
 end
 
 function GM:PlayerAuthed(ply, steamid, uniqueid)
-	net.Start("mb_StartCharacterPick")
-	net.Send(ply)
+	
 end
 
 function GM:PlayerInitialSpawn( ply )
 	//ply:SetTeam( TEAM_BLUE );
 	ply:Initialize()
-	ply.RespawnTime = CurTime()
 	ply:SetTeam(TEAM_SPECTATOR)
+	net.Start("mb_StartCharacterPick")
+	net.Send(ply)
 end
 
 function GM:PlayerSpawn( ply )
@@ -33,13 +33,20 @@ function GM:PlayerSpawn( ply )
 	ply:SetupHands()
 end
 
-function GM:PlayerDeath( ply )
-	
-	local char = ply:GetCharacterDetails();
-	if ( char ) then
-		char.OnDeath( ply );
+function GM:PlayerDeath( victim, inflictor, attacker )
+	if attacker:IsPlayer() then
+		print(attacker:Nick() .. " has killed " .. victim:Nick())
 	end
-	ply.RespawnTime = CurTime() + 3
+	local char = victim:GetCharacterDetails();
+	if ( char ) then
+		char.OnDeath( victim );
+	end
+	victim.RespawnTime = CurTime() + 3
+
+	if not attacker:IsPlayer() and attacker:GetOwner() then attacker = attacker:GetOwner() end
+	if attacker == victim then return end
+	if not char then return end
+	char.OnKill(attacker, victim)
 end
 
 function GM:ShouldCollide( ply, bot )
@@ -95,14 +102,6 @@ function GM:PlayerSay(sender, text, teamchat)
 		end
 		return ""
 	end
-end
-
-function GM:PlayerDeath(victim, inflictor, attacker)
-	print(attacker)
-	if not attacker:IsPlayer() and attacker:GetOwner() then attacker = attacker:GetOwner() end
-	local char = attacker:GetCharacterDetails()
-	if not char then return end
-	char.OnKill(attacker, victim)
 end
 
 /*function GM:Think()

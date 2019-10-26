@@ -10,20 +10,24 @@ SPELL.OnInitalize = function()
 end
 
 SPELL.OnCast	= function( ply )
-	if ( ply.moba.pet ) then
-		print("player already has a manhack!")
-		ply.moba.pet:Remove();
-		ply.moba.pet = nil;
+	if table.Count(ply.moba.pet) >= 2 then
+		print("player has too many manhacks!")
+		return
 	end
 	
-	local pos = ply:GetPos() + Vector( 0, 0, 64 );
+	local pos = ply:GetPos() + Vector( 0, 12, 64 );
 	pos = pos + ( ply:GetForward() * 12 );
 	
-	local manhack = ents.Create( "ent_moba_manhack" );
+	local manhack = ents.Create( "npc_manhack" );
 	manhack:SetPos( pos );
 	manhack:Spawn();
 	manhack:Activate();
 	manhack:SetOwner( ply );
+	PetIgnoreOwnTeam(ply, manhack)
 	
-	ply.moba.pet = manhack;
+	ply.moba.pet[manhack:EntIndex()] = manhack
+	timer.Simple(16, function() 
+		ply.moba.pet[manhack:EntIndex()]:TakeDamage(999, ply, ply)
+		ply.moba.pet[manhack:EntIndex()] = nil
+	end)
 end

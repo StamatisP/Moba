@@ -35,3 +35,8 @@ local function mb_ResetSpellCD(len)
 	spells[slot].cooldown = RealTime()
 end
 net.Receive("mb_ResetSpellCD", mb_ResetSpellCD)
+
+local function mb_RoundStart(len)
+	hook.Run("mb_RoundStart")
+end
+net.Receive("mb_RoundStart", mb_RoundStart)

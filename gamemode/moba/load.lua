@@ -32,6 +32,8 @@ if ( SERVER ) then
 	util.AddNetworkString("mb_StartCharacterPick")
 	util.AddNetworkString("mb_SendCharacterPick")
 	util.AddNetworkString("mb_ResetSpellCD")
+	util.AddNetworkString("mb_RoundEnd")
+	util.AddNetworkString("mb_RoundStart")
 end
 
 local function loadCoreGame( dir )
@@ -63,6 +65,7 @@ local function loadCharacters( dir )
 	
 	for k, v in pairs( file.Find( dir .. "/*.lua", "LUA" ) ) do
 		CHARACTER = {};
+		if v == "template.lua" then continue end
 		if ( SERVER ) then 
 			AddCSLuaFile( "characters/" .. v ); 
 		end
@@ -78,8 +81,8 @@ local function loadCharacters( dir )
 end
 
 local function loadSpells( dir )
-	
-	for k, v in pairs( file.Find( dir .. "/*.lua", "LUA" ) ) do
+	local files, directories = file.Find( dir .. "/*.lua", "LUA" )
+	for k, v in pairs( files ) do
 		SPELL = {};
 		if ( SERVER ) then 
 			AddCSLuaFile( "spells/" .. v ); 

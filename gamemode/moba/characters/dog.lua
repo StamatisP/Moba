@@ -39,14 +39,19 @@ CHARACTER.VoiceOver = {
 	},
 	angry = VOMakeList("npc/dog/dog_angry#.wav", 3)
 }
-PrintTable(CHARACTER.VoiceOver)
 
 CHARACTER.OnDeath	= function( ply, bot )
 	ply:EmitSound(RandomVO("dog", "sad"))
+	if table.Count(ply.moba.pet) == 1 then
+		print("ply has ball, removing") 
+		ply.moba.pet[ply.ballindex]:Remove()
+		ply.moba.pet[ply.ballindex] = nil
+	end
 end
 
 CHARACTER.OnInitialize 	= function( ply )
-	if ( ply.moba.pet ) then 
+	if ( table.Count(ply.moba.pet) == 1 ) then
+		print("ply has ball, removing") 
 		ply.moba.pet:Remove()
 		ply.moba.pet = nil
 	end
@@ -60,7 +65,8 @@ CHARACTER.OnInitialize 	= function( ply )
 	ball:Activate()
 	ball:SetOwner( ply )
 	
-	ply.moba.pet = ball
+	ply.moba.pet[ball:EntIndex()] = ball
+	ply.ballindex = ball:EntIndex()
 end
 
 CHARACTER.OnKill = function(ply, victim)

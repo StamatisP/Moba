@@ -17,7 +17,11 @@ local function CreateCharMenu()
 	local chardesc
 	for k, v in pairs(MOBA.Characters) do
 		print(k)
+		if v.Disabled then continue end
 		local item = list:Add("DModelPanel")
+		if not v.Model then v.Model = "models/player/alyx.mdl" end
+		if not v.Name then v.Name = "Bugged" end
+		if not v.Description then v.Description = "This bugged." end
 		item:SetModel(v.Model)
 		item:SetSize(100, 100)
 		item:SetText(v.Name)
