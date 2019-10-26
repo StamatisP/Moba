@@ -10,6 +10,6 @@ SPELL.OnInitalize = function()
 end
 
 SPELL.OnCast	= function( ply, target )
-	if not ply or not ply.moba.pet then print("no ply or pet!") return end
-	ply.moba.pet:ReturnToOwner()
+	if not ply or not ply.moba.pet[ply.ballindex] then print("no ply or pet!") return end
+	ply.moba.pet[ply.ballindex]:ReturnToOwner()
 end

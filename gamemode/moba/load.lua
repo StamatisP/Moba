@@ -36,6 +36,13 @@ if ( SERVER ) then
 	util.AddNetworkString("mb_RoundStart")
 end
 
+if SERVER then
+	resource.AddWorkshop("386069857")
+	resource.AddWorkshop("1344177917")
+	player_manager.AddValidModel( "Gordon Freeman", "models/lazlo/gordon_freeman.mdl" );
+	player_manager.AddValidHands( "Gordon Freeman", "models/player/lenoax_gordon_suit_hands.mdl", 0, "00000000" );
+end
+
 local function loadCoreGame( dir )
 	
 	for k, v in pairs( file.Find( dir .. "/sv_*.lua", "LUA" ) ) do
@@ -81,23 +88,27 @@ local function loadCharacters( dir )
 end
 
 local function loadSpells( dir )
-	local files, directories = file.Find( dir .. "/*.lua", "LUA" )
-	for k, v in pairs( files ) do
-		SPELL = {};
-		if ( SERVER ) then 
-			AddCSLuaFile( "spells/" .. v ); 
+	local files, directories = file.Find( dir .. "/*", "LUA" )
+	
+	for k, v in pairs(directories) do
+		print("MOBA -> Loading char spells: " .. v)
+		for k2, v2 in pairs( file.Find(dir .. "/" .. v .. "/*.lua", "LUA") ) do
+			SPELL = {};
+			if ( SERVER ) then 
+				AddCSLuaFile( "spells/" .. v .. "/" .. v2); 
+			end
+			include( "spells/" .. v .. "/" .. v2 );
+			
+			local class = string.gsub( v2, ".lua", "" );
+			
+			MOBA.Spells[ class ] = SPELL;
+			
+			SPELL.OnInitalize();
+			
+			print( "MOBA -> Spell loaded", class );
 		end
-		include( "spells/" .. v );
-		
-		local class = string.gsub( v, ".lua", "" );
-		
-		MOBA.Spells[ class ] = SPELL;
-		
-		SPELL.OnInitalize();
-		
-		print( "MOBA -> Spell loaded", class );
+		SPELL = nil;
 	end
-	SPELL = nil;
 end
 
 loadCoreGame( "moba/gamemode/moba/base" );

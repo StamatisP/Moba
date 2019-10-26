@@ -7,6 +7,7 @@ SPELL.Cooldown	= 1;
 SPELL.Description = "Dashes you forward " .. SPELL.Range .. " units."
 
 SPELL.OnInitalize = function()
+	
 end
 
 SPELL.OnCast	= function( ply, target )
