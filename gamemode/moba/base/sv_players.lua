@@ -45,6 +45,7 @@ function GM:PlayerDeath( victim, inflictor, attacker )
 
 	if not attacker:IsPlayer() and attacker:GetOwner() then attacker = attacker:GetOwner() end
 	if attacker == victim then return end
+	char = attacker:GetCharacterDetails()
 	if not char then return end
 	char.OnKill(attacker, victim)
 end
@@ -74,7 +75,7 @@ function GM:PlayerFootstep(ply, pos, foot, sound, volume, filter)
 	if char then
 		if char.StepSounds then
 			local s = char.StepSounds[math.random(#char.StepSounds)]
-			ply:EmitSound(s)
+			ply:EmitSound(s, 75, 100, 0.4)
 			return true
 		end
 	end

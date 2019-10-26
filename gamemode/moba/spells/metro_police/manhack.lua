@@ -14,6 +14,7 @@ SPELL.OnCast	= function( ply )
 		print("player has too many manhacks!")
 		return
 	end
+	ply:EmitSound("npc/metropolice/vo/visceratordeployed.wav")
 	
 	local pos = ply:GetPos() + Vector( 0, 12, 64 );
 	pos = pos + ( ply:GetForward() * 12 );

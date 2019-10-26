@@ -50,10 +50,10 @@ CHARACTER.OnDeath	= function( ply, bot )
 end
 
 CHARACTER.OnInitialize 	= function( ply )
-	if ( table.Count(ply.moba.pet) == 1 ) then
+	if ( ply.moba.pet[ply.ballindex] ) then
 		print("ply has ball, removing") 
-		ply.moba.pet:Remove()
-		ply.moba.pet = nil
+		ply.moba.pet[ply.ballindex]:Remove()
+		ply.moba.pet[ply.ballindex] = nil
 	end
 
 	local pos = ply:GetPos() + Vector( 0, 0, 64 )

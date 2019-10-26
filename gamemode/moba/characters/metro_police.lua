@@ -6,8 +6,9 @@ CHARACTER.Weapon		= "weapon_stunstick";
 CHARACTER.Health 		= 200
 
 CHARACTER.Description 	= "A human volunteer that decided to side with the Combine. They stun and disorient players."
+CHARACTER.StepSounds	= VOMakeList("npc/metropolice/gear#.wav", 6)
 
-CHARACTER.Speed			= 1.2;
+CHARACTER.Speed			= 1.1;
 
 CHARACTER.Equipment = { 
 	["head"] = "",
@@ -20,18 +21,34 @@ CHARACTER.Spells	= {
 	[1] = "manhack",
 	[2] = "cityscanner",
 	[3] = "",
-	[4] = ""
-};
+	[4] = "manhack_swarm"
+}
+
+CHARACTER.VoiceOver = {
+	sad = {
+
+	},
+	happy = {
+		[1] = "npc/metropolice/vo/chuckle.wav"
+	},
+	angry = {
+		[1] = "npc/metropolice/vo/shit.wav"
+	},
+	death = VOMakeList("/npc/metropolice/die#.wav", 4)
+}
 
 CHARACTER.OnDeath	= function( ply )
+	ply:EmitSound(RandomVO("metro_police", "death"))
 end
 
 CHARACTER.OnInitialize 	= function( ply )
+	ply:EmitSound("npc/combine_soldier/vo/teamdeployedandscanning.wav")
 end
 
 CHARACTER.OnAttack	= function( ply, bot, enemy )
 end
 
 CHARACTER.OnKill = function(ply, victim)
-	
+	ply:EmitSound("npc/metropolice/vo/chuckle.wav")
+	print("please")
 end
