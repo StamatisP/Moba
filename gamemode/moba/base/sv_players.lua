@@ -10,12 +10,18 @@ function GM:PlayerInitialSpawn( ply )
 	ply:Initialize()
 	//ply:SetTeam(TEAM_BLUE)
 	//ply:SetCharacter("alyx_vance")
+	if ply:IsBot() then
+		ply:SetCharacter("alyx_vance")
+		local theteam = team.BestAutoJoinTeam()
+		ply:SetTeam(theteam)
+		print(ply:Nick() .. " has joined team " .. theteam)
+	end
 	net.Start("mb_StartCharacterPick")
 	net.Send(ply)
 end
 
 function GM:PlayerSpawn( ply )
-	if ply:Team() == TEAM_UNASSIGNED or ply:Team() == TEAM_SPECTATOR then
+	if ply:Team() == TEAM_UNASSIGNED or ply:Team() == TEAM_SPECTATOR or ply:Team() == TEAM_CONNECTING then
 		ply:StripWeapons()
 		ply:Spectate( OBS_MODE_ROAMING )
 		return false

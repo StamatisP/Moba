@@ -27,17 +27,18 @@ local function PlayMusic()
 		math.randomseed(os.time())
 		CurrentMusic = hl2_music[GetPseudoRandomNumber(#hl2_music)]
 		sound.PlayFile("sound/"..CurrentMusic.song, "", function(audio_channel, err, errorName)
-			if err then
+			if err and errorName then
 				ErrorNoHalt(err)
 				print(errorName)
 			end
 			MusicChannel = audio_channel
+			MusicChannel:SetVolume(0.6)
 		end)
 		music_duration = CurrentMusic.duration
 		timer.Adjust("PlayMusic", music_duration)
 	end)
 end
-hook.Add("mb_RoundStart", "Test", PlayMusic)
+hook.Add("mb_RoundStart", "StartMusic", PlayMusic)
 
 local function StopMusic()
 	if MusicChannel then
@@ -45,3 +46,4 @@ local function StopMusic()
 		timer.Destroy("PlayMusic")
 	end
 end
+hook.Add("mb_RoundEnd", "StopMusic", StopMusic)
