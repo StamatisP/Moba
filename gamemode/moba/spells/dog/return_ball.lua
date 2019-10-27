@@ -9,6 +9,10 @@ SPELL.Description = "Returns your ball to you."
 SPELL.OnInitalize = function()
 end
 
+SPELL.CanCast = function(ply)
+	return true
+end
+
 SPELL.OnCast	= function( ply, target )
 	if not ply or not ply.moba.pet[ply.ballindex] then print("no ply or pet!") return end
 	ply.moba.pet[ply.ballindex]:ReturnToOwner()

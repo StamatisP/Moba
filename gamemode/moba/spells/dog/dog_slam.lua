@@ -10,6 +10,10 @@ SPELL.Description = "Knocks up every player within " .. SPELL.Range .. " units."
 SPELL.OnInitalize = function()
 end
 
+SPELL.CanCast = function(ply)
+	return true
+end
+
 SPELL.OnCast	= function( ply, tgt )
 	local targets = GetClosestPlayerTable(ply, MOBA.Spells["dog_slam"].Range)
 	if not targets then print("no targets!") end

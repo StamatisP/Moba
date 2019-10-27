@@ -8,6 +8,37 @@ hook.Add("Move", "PlayerSpeed", function(ply, mv)
 	end
 end)
 
+hook.Add("StartCommand", "BotBehavior", function(ply, cmd)
+	if ( !ply:IsBot() or !ply:Alive() ) then return end
+	if not GetGlobalBool("botmove", false) then return end
+
+	cmd:ClearMovement()
+	cmd:ClearButtons()
+
+	if ( !IsValid( ply.CustomEnemy ) ) then
+		for id, pl in pairs( player.GetAll() ) do
+			if ( !pl:Alive() or pl == ply ) then continue end
+			ply.CustomEnemy = pl
+		end
+	end
+
+	if ( !IsValid( ply.CustomEnemy ) ) then return end
+
+	cmd:SetForwardMove( ply:GetWalkSpeed() )
+
+	if ( ply.CustomEnemy:IsPlayer() ) then
+		cmd:SetViewAngles( ( ply.CustomEnemy:GetShootPos() - ply:GetShootPos() ):GetNormalized():Angle() )
+	else
+		cmd:SetViewAngles( ( ply.CustomEnemy:GetPos() - ply:GetShootPos() ):GetNormalized():Angle() )
+	end
+
+	cmd:SetButtons( IN_ATTACK )
+
+	if ( !ply.CustomEnemy:Alive() ) then
+		ply.CustomEnemy = nil
+	end
+end)
+
 local meta = FindMetaTable( "Player" );
 if ( !meta ) then return; end
 

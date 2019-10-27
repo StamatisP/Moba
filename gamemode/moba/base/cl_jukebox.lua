@@ -3,7 +3,18 @@ local hl2_music = {
 	[2] = {song = "music/hl2_song12_long.mp3", duration = 74},
 	[3] = {song = "music/hl2_song14.mp3", duration = 159},
 	[4] = {song = "music/hl2_song29.mp3", duration = 135},
-	[5] = {song = "music/hl2_song20_submix4.mp3", duration = 139}
+	[5] = {song = "music/hl2_song20_submix4.mp3", duration = 139},
+	[6] = {song = "music/vlvx_song22.mp3", duration = 195},
+	[7] = {song = "music/vlvx_song23.mp3", duration = 167},
+	[8] = {song = "music/vlvx_song24.mp3", duration = 128},
+	[9] = {song = "music/vlvx_song25.mp3", duration = 168},
+	[10] = {song = "music/vlvx_song27.mp3", duration = 211},
+	[11] = {song = "music/vlvx_song28.mp3", duration = 194},
+	[12] = {song = "music/vlvx_song9.mp3", duration = 76},
+	[13] = {song = "music/vlvx_song11.mp3", duration = 79},
+	[14] = {song = "music/vlvx_song12.mp3", duration = 121},
+	[15] = {song = "music/vlvx_song18.mp3", duration = 185},
+	[16] = {song = "music/vlvx_song21.mp3", duration = 170}
 }
 
 local CurrentMusic

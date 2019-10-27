@@ -58,7 +58,11 @@ local function RedDrawTarget()
 			if IsLookingAt(LocalPlayer(), v) then
 				if v:GetPos():DistToSqr(LocalPlayer():GetPos()) > 200 * 200 then continue end
 				render.MaterialOverride(wMat)
-				render.SetColorModulation(1, 0, 0)
+				if v:Team() == TEAM_BLUE then
+					render.SetColorModulation(0, 0, 1)
+				else
+					render.SetColorModulation(1, 0, 0)
+				end
 				v:DrawModel()
 				render.MaterialOverride(nil) // to fix renderview breaking
 			end
@@ -72,15 +76,15 @@ hook.Add("PostDrawEffects", "DrawTarget", RedDrawTarget)
 
 local function PostPlayerDraw(ply)
 	if ( !IsValid( ply ) ) then return end
-	if ( ply == LocalPlayer() ) then return end -- Don't draw a name when the player is you
-	if ( !ply:Alive() ) then return end -- Check if the player is alive
+	if ( ply == LocalPlayer() ) then return end 
+	if ( !ply:Alive() ) then return end 
 
-	local dist = LocalPlayer():GetPos():DistToSqr( ply:GetPos() ) --Get the distance between you and the player
+	local dist = LocalPlayer():GetPos():DistToSqr( ply:GetPos() ) 
 
-	if ( dist < 1000 * 1000 ) then --If the distance is less than 1000 units, it will draw the name
+	if ( dist < 1000 * 1000 ) then 
 
 		local mins, maxs = ply:GetModelBounds()
-		local offset = maxs + Vector( -5, -15, -10 )
+		local offset = maxs + Vector( 0, -25, 0 )
 		local ang = LocalPlayer():EyeAngles()
 		local pos = ply:GetPos() + offset + ang:Up()
 

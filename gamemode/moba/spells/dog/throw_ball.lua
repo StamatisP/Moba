@@ -9,14 +9,19 @@ SPELL.Description = "Throws your ball " .. SPELL.Range .. " units."
 SPELL.OnInitalize = function()
 end
 
-SPELL.OnCast	= function( ply, target )
-	if not ply or not ply.moba.pet[ply.ballindex] then print("no ply or ball pet!!") return end
-	local ball = ply.moba.pet[ply.ballindex]
-	if ply:GetPos():DistToSqr(ball:GetPos()) >= 200 * 200 then
-		print("too far away from the ball to throw!")
+SPELL.CanCast = function(ply)
+	if not ply or not ply:GetNWEntity("dog_ball", NULL) then print("no ply or ball pet!!") return end
+	local ball = ply:GetNWEntity("dog_ball", NULL)
+	if not ball or ply:GetPos():DistToSqr(ball:GetPos()) >= 200 * 200 then
+		print("too far away from the ball to throw, or no ball!")
 		//ply:ResetSpellCD(1)
-		return
+		return false
 	end
+	return true
+end
+
+SPELL.OnCast	= function( ply, target )
+	local ball = ply:GetNWEntity("dog_ball", NULL)
 	local ballphys = ball:GetPhysicsObject()
 	ball:EmitSound("Weapon_CombineGuard.Special1")
 	ball:SetModel("models/roller_spikes.mdl")

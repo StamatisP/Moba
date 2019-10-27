@@ -16,13 +16,17 @@ local function _castSpell(slot)
 	local time = MOBA.Spells[ spells[slot].spell ].Cooldown;
 	if ( !time ) then return; end
 	
-	RunConsoleCommand( "mb_cast", slot );
-	spells[slot].cooldown = RealTime() + time;
+	if MOBA.Spells[ spells[slot].spell ].CanCast(LocalPlayer()) then
+		RunConsoleCommand( "mb_cast", slot );
+		spells[slot].cooldown = RealTime() + time;
+	else
+		surface.PlaySound("npc/roller/mine/rmine_blip3.wav")
+	end
 end
 
 function GM:Think()
 	if gui.IsGameUIVisible() then return end
-	if ( input.IsKeyDown( KEY_Q ) ) then
+	/*if ( input.IsKeyDown( KEY_Q ) ) then
 		_castSpell(1)
 	elseif ( input.IsKeyDown( KEY_E ) ) then
 		_castSpell(2)
@@ -30,8 +34,23 @@ function GM:Think()
 		_castSpell(3)
 	elseif ( input.IsKeyDown( KEY_R ) ) then
 		_castSpell(4)
+	end*/
+end
+
+local function InputManager()
+	if gui.IsGameUIVisible() then return end
+	if ( input.WasKeyReleased( KEY_Q ) ) then
+		_castSpell(1)
+	elseif ( input.WasKeyReleased( KEY_E ) ) then
+		_castSpell(2)
+	elseif ( input.WasKeyReleased( KEY_F ) ) then
+		_castSpell(3)
+	elseif ( input.WasKeyReleased( KEY_R ) ) then
+		_castSpell(4)
 	end
 end
+
+hook.Add("FinishMove", "InputManager", InputManager)
 
 function GM:PlayerBindPress( ply, bind )
 end

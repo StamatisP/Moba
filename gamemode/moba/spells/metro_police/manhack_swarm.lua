@@ -2,11 +2,15 @@ SPELL.Name		= "Manhack Swarm";
 SPELL.Icon		= "";
 SPELL.Range		= -1;
 SPELL.Sequence	= "gesture_signal_forward"; //What sequence/animation should it play
-SPELL.Cooldown	= 8;
+SPELL.Cooldown	= 60;
 
 SPELL.Description = "Spawns a swarm of Manhacks."
 
 SPELL.OnInitalize = function()
+end
+
+SPELL.CanCast = function(ply)
+	return true
 end
 
 SPELL.OnCast	= function( ply )
@@ -24,8 +28,10 @@ SPELL.OnCast	= function( ply )
 			manhack:SetOwner( ply );
 			PetIgnoreOwnTeam(ply, manhack)
 			
-			timer.Simple(math.Rand(15, 17), function() 
-				manhack:TakeDamage(999, ply, ply)
+			timer.Simple(math.Rand(15, 17), function()
+				if IsValid(manhack) then
+					manhack:TakeDamage(999, ply, ply)
+				end
 			end)
 		end)
 	end

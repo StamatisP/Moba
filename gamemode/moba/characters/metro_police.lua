@@ -20,16 +20,17 @@ CHARACTER.Equipment = {
 CHARACTER.Spells	= {
 	[1] = "manhack",
 	[2] = "cityscanner",
-	[3] = "",
+	[3] = "hopper_mine",
 	[4] = "manhack_swarm"
 }
 
 CHARACTER.VoiceOver = {
 	sad = {
-
+		[1] = "npc/metropolice/vo/officerneedshelp.wav"
 	},
 	happy = {
-		[1] = "npc/metropolice/vo/chuckle.wav"
+		[1] = "npc/metropolice/vo/chuckle.wav",
+		[2] = "npc/metropolice/vo/protectioncomplete.wav"
 	},
 	angry = {
 		[1] = "npc/metropolice/vo/shit.wav"
@@ -49,6 +50,5 @@ CHARACTER.OnAttack	= function( ply, bot, enemy )
 end
 
 CHARACTER.OnKill = function(ply, victim)
-	ply:EmitSound("npc/metropolice/vo/chuckle.wav")
-	print("please")
+	ply:EmitSound(RandomVO("metro_police", "happy"))
 end

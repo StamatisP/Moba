@@ -46,6 +46,7 @@ CHARACTER.OnDeath	= function( ply, bot )
 		print("ply has ball, removing") 
 		ply.moba.pet[ply.ballindex]:Remove()
 		ply.moba.pet[ply.ballindex] = nil
+		ply:SetNWEntity("dog_ball", NULL)
 	end
 end
 
@@ -67,6 +68,7 @@ CHARACTER.OnInitialize 	= function( ply )
 	
 	ply.moba.pet[ball:EntIndex()] = ball
 	ply.ballindex = ball:EntIndex()
+	ply:SetNWEntity("dog_ball", ball)
 end
 
 CHARACTER.OnKill = function(ply, victim)

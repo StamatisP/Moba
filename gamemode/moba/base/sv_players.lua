@@ -7,9 +7,9 @@ function GM:PlayerAuthed(ply, steamid, uniqueid)
 end
 
 function GM:PlayerInitialSpawn( ply )
-	//ply:SetTeam( TEAM_BLUE );
 	ply:Initialize()
-	ply:SetTeam(TEAM_SPECTATOR)
+	//ply:SetTeam(TEAM_BLUE)
+	//ply:SetCharacter("alyx_vance")
 	net.Start("mb_StartCharacterPick")
 	net.Send(ply)
 end
@@ -102,8 +102,22 @@ function GM:PlayerSay(sender, text, teamchat)
 			dummy:SetPos(sender:GetEyeTrace().HitPos + Vector(0, 0, 10))
 		end
 		return ""
+	elseif text == "!stopmovement" then
+		SetGlobalBool("botmove", false)
+	elseif text == "!startmovement" then
+		SetGlobalBool("botmove", true)
 	end
 end
+
+hook.Add("EntityTakeDamage", "PreventTeamKill", function(target, dmginfo)
+	local attacker = dmginfo:GetAttacker()
+	if not attacker:IsPlayer() then attacker = attacker:GetOwner() end
+	if target:IsPlayer() and attacker then
+		if target:Team() == attacker:Team() then
+			return true
+		end
+	end
+end)
 
 /*function GM:Think()
 	for k, v in ipairs(player.GetAll()) do
