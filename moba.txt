@@ -1,6 +1,6 @@
 "Moba"
 {
-	"title"		"MOBA"
+	"title"		"Half-Life Hero Shooter"
 	"base"		"base"
 	"menusystem" "1"
 }
