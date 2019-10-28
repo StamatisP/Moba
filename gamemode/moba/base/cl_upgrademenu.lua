@@ -11,7 +11,7 @@ local function UpgradeMenu()
 
 	local upgradelist = vgui.Create("DIconLayout", scroll)
 	upgradelist:Dock(FILL)
-	upgradelist:SetSpaceY(5)
+	upgradelist:SetSpaceY(10)
 	upgradelist:SetSpaceX(5)
 
 	local token_label = upgradelist:Add("DLabel")
@@ -21,7 +21,7 @@ local function UpgradeMenu()
 
 	local healthitem = upgradelist:Add("DButton")
 	healthitem:SetText("Health Multiplier: " .. moba.healthmult * 100 .. "%")
-	healthitem:SetSize(200, 50)
+	healthitem:SetSize(300, 50)
 	function healthitem:DoClick()
 		if spendabletokens <= 0 then return end
 		moba.healthmult = moba.healthmult + 0.2
@@ -34,7 +34,7 @@ local function UpgradeMenu()
 
 	local speeditem = upgradelist:Add("DButton")
 	speeditem:SetText("Speed Multiplier: " .. moba.speedmult * 100 .. "%")
-	speeditem:SetSize(200, 50)
+	speeditem:SetSize(300, 50)
 	function speeditem:DoClick()
 		if spendabletokens <= 0 then return end
 		moba.speedmult = moba.speedmult + 0.2
@@ -47,7 +47,7 @@ local function UpgradeMenu()
 
 	local damageitem = upgradelist:Add("DButton")
 	damageitem:SetText("Damage Multiplier: " .. moba.damagemult * 100 .. "%")
-	damageitem:SetSize(200, 50)
+	damageitem:SetSize(300, 50)
 	function damageitem:DoClick()
 		if spendabletokens <= 0 then return end
 		moba.damagemult = moba.damagemult + 0.2

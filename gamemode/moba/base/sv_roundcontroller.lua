@@ -1,6 +1,6 @@
-mb_RoundStatus = ROUND_PREGAME // 0 is not started, 1 is started
-mb_RoundEnd = nil
-mb_RoundTime = 15 * 60
+mb_RoundStatus = mb_RoundStatus or ROUND_PREGAME // 0 is not started, 1 is started
+mb_RoundEnd = mb_RoundEnd
+mb_RoundTime = mb_RoundTime or 15 * 60
 function StartRound()
 	print("Round start!")
 	net.Start("mb_RoundStart")
