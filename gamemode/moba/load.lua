@@ -34,6 +34,7 @@ if ( SERVER ) then
 	util.AddNetworkString("mb_ResetSpellCD")
 	util.AddNetworkString("mb_RoundEnd")
 	util.AddNetworkString("mb_RoundStart")
+	util.AddNetworkString("mb_UpdateRoundTime")
 end
 
 if SERVER then

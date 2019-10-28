@@ -60,3 +60,23 @@ local function mb_RoundEnd(len)
 	hook.Run("mb_RoundEnd")
 end
 net.Receive("mb_RoundEnd", mb_RoundEnd)
+
+local function mb_UpdateRoundTime(len)
+	local time = net.ReadUInt(16)
+	hook.Run("mb_RoundStart")
+	local panel = vgui.Create("DPanel")
+	panel:SetSize(600, 100)
+	panel:SetPos(ScrW() / 2, 100)
+	print(string.ToMinutesSeconds(time))
+	function panel:Paint(w, h)
+		draw.SimpleTextOutlined(string.ToMinutesSeconds(time), "DermaLarge", 0, 0, Color(255, 255, 255, 255), TEXT_ALIGN_LEFT, TEXT_ALIGN_TOP, 1, Color(0,0,0))
+	end
+	timer.Create("SetRoundTime", 1, 0, function()
+		if time <= 0 then
+			panel:Remove()
+			return
+		end
+		time = time - 1
+	end)
+end
+net.Receive("mb_UpdateRoundTime", mb_UpdateRoundTime)

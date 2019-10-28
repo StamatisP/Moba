@@ -18,6 +18,11 @@ function GM:PlayerInitialSpawn( ply )
 	end
 	net.Start("mb_StartCharacterPick")
 	net.Send(ply)
+	if mb_RoundStatus == ROUND_ACTIVE then
+		net.Start("mb_UpdateRoundTime")
+			net.WriteUInt(CurTime() - (15 * 60), 16)
+		net.Send(ply)
+	end
 end
 
 function GM:PlayerSpawn( ply )
