@@ -3,8 +3,8 @@ hook.Add("Move", "PlayerSpeed", function(ply, mv)
 	if char then
 		local name = char.Name
 		local speed = mv:GetMaxSpeed()
-		mv:SetMaxSpeed(speed * char.Speed)
-		mv:SetMaxClientSpeed(speed * char.Speed)
+		mv:SetMaxSpeed(speed * (char.Speed * ply.moba.speedmult))
+		mv:SetMaxClientSpeed(speed * (char.Speed * ply.moba.speedmult))
 	end
 end)
 

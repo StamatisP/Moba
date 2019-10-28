@@ -35,6 +35,8 @@ if ( SERVER ) then
 	util.AddNetworkString("mb_RoundEnd")
 	util.AddNetworkString("mb_RoundStart")
 	util.AddNetworkString("mb_UpdateRoundTime")
+	util.AddNetworkString("mb_UpdateTokenCount")
+	util.AddNetworkString("mb_ClientRequestUpgrade")
 end
 
 if SERVER then

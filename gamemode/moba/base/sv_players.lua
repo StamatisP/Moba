@@ -38,8 +38,8 @@ function GM:PlayerSpawn( ply )
 	ply:StripWeapons()
 	if char.Weapon then ply:Give(char.Weapon) end
 	ply:SetModel(char.Model)
-	ply:SetMaxHealth(char.Health)
-	ply:SetHealth(char.Health)
+	ply:SetMaxHealth(char.Health * ply.moba.healthmult)
+	ply:SetHealth(char.Health * ply.moba.healthmult)
 	char.OnInitialize(ply)
 	ply:SetupHands()
 end
@@ -75,6 +75,10 @@ end
 
 function GM:ShowHelp(ply)
 	ply:ConCommand("mb_charmenu")
+end
+
+function GM:ShowTeam(ply)
+	ply:ConCommand("mb_upgrademenu")
 end
 
 function GM:PlayerCanJoinTeam(ply, index)
@@ -127,6 +131,7 @@ hook.Add("EntityTakeDamage", "PreventTeamKill", function(target, dmginfo)
 		if target:Team() == attacker:Team() then
 			return true
 		end
+		dmginfo:ScaleDamage(attacker.moba.damagemult)
 	end
 end)
 

@@ -6,6 +6,10 @@ function meta:Initialize()
 		self.moba.character = "";
 		self.moba.spells = {}; //This is used for ONLY cooldowns
 		self.moba.pet = {} // you can have multiple pets
+		self.moba.usedtokens = 0
+		self.moba.speedmult = 1
+		self.moba.healthmult = 1
+		self.moba.damagemult = 1
 end
 
 function meta:SetCharacter( char )

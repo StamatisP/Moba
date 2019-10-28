@@ -80,3 +80,10 @@ local function mb_UpdateRoundTime(len)
 	end)
 end
 net.Receive("mb_UpdateRoundTime", mb_UpdateRoundTime)
+
+local function mb_UpdateTokenCount(len)
+	local totaltokens = net.ReadUInt(16)
+	local spendabletokens = totaltokens - moba.usedtokens
+	chat.AddText(string.format("You have %i available tokens to spend!", spendabletokens))
+end
+net.Receive("mb_UpdateTokenCount", mb_UpdateTokenCount)

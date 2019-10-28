@@ -5,6 +5,10 @@ function GM:Initialize()
 		moba.character = "";
 		moba.spells = {};
 		moba.equipment = {};
+		moba.usedtokens = 0
+		moba.healthmult = 1
+		moba.speedmult = 1
+		moba.damagemult = 1
 end
 
 local function _castSpell(slot)
