@@ -74,3 +74,14 @@ end
 CHARACTER.OnKill = function(ply, victim)
 	ply:EmitSound(RandomVO("dog", "happy"))
 end
+
+CHARACTER.CalcMainActivity = function(ply, vel)
+	local len = vel:Length2DSqr()
+	if len >= 150 * 150 then
+		return -1, ply:LookupSequence("run_all")
+	elseif len >= 1 then
+		return -1, ply:LookupSequence("walk_all")
+	end
+
+	return ACT_MP_STAND_IDLE, -1
+end

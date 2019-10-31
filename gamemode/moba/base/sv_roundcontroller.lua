@@ -38,4 +38,11 @@ function EndRound()
 	net.Start("mb_RoundEnd") // i could merge the two net messages and write an int but i dont wanna
 	net.Broadcast()
 	mb_RoundStatus = ROUND_END
+	if team.TotalFrags(TEAM_BLUE) > team.TotalFrags(TEAM_RED) then
+		print("Blue team win!")
+	elseif team.TotalFrags(TEAM_RED) > team.TotalFrags(TEAM_BLUE) then
+		print("Red team win!")
+	else
+		print("Stalemate")
+	end
 end

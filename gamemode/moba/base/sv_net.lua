@@ -38,13 +38,13 @@ local function mb_ClientRequestUpgrade(len, ply)
 	local message = "Your %s Multiplier is now %f!"
 	if perk == 1 then
 		ply.moba.healthmult = ply.moba.healthmult + 0.2
-		ply:PrintMessage(HUD_PRINTTALK, string.format(message, PerkTranslate[perk], math.floor(ply.moba.healthmult * 100)))
+		ply:PrintMessage(HUD_PRINTTALK, string.format(message, PerkTranslate[perk], ply.moba.healthmult * 100))
 	elseif perk == 2 then
 		ply.moba.speedmult = ply.moba.speedmult + 0.2
-		ply:PrintMessage(HUD_PRINTTALK, string.format(message, PerkTranslate[perk], math.floor(ply.moba.speedmult * 100)))
+		ply:PrintMessage(HUD_PRINTTALK, string.format(message, PerkTranslate[perk], ply.moba.speedmult * 100))
 	elseif perk == 3 then
 		ply.moba.damagemult = ply.moba.damagemult + 0.2
-		ply:PrintMessage(HUD_PRINTTALK, string.format(message, PerkTranslate[perk], math.floor(ply.moba.damagemult * 100)))
+		ply:PrintMessage(HUD_PRINTTALK, string.format(message, PerkTranslate[perk], ply.moba.damagemult * 100))
 	end
 end
 net.Receive("mb_ClientRequestUpgrade", mb_ClientRequestUpgrade)

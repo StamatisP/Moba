@@ -1,4 +1,5 @@
 CreateClientConVar("mb_prefchar", "alyx_vance", true, "What your preferred character is.")
+local isChatOpen = false
 
 function GM:Initialize()
 	moba = {};
@@ -15,6 +16,7 @@ local function _castSpell(slot)
 	local spells = moba.spells;
 	if ( !spells[slot] || spells[slot].spell == "" || RealTime() < spells[slot].cooldown ) then return; end
 	if not LocalPlayer():Alive() then return end
+	if isChatOpen then return end
 	
 	//PrintTable( spells[slot] );
 	local time = MOBA.Spells[ spells[slot].spell ].Cooldown;
@@ -85,3 +87,13 @@ local function ThirdPerson(ply, pos, angles, fov)
 	end
 end
 hook.Add("CalcView", "Dog3rdPerson", ThirdPerson)
+
+local function ChatPreventSpells(teamc)
+	isChatOpen = true
+end
+hook.Add("StartChat", "PreventAccidents", ChatPreventSpells)
+
+local function EndChatPrevent()
+	isChatOpen = false
+end
+hook.Add("FinishChat", "NoAccidents", EndChatPrevent)

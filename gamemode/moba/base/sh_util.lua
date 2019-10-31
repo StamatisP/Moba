@@ -26,7 +26,7 @@ function IsLookingAt( ply, target )
 	local aimvector = ply:GetAimVector()
 	-- The vector that goes from the player's shoot pos to the entity's position
 	//print(target:Nick())
-	local entVector = target:GetPos() - ply:GetShootPos()
+	local entVector = target:WorldSpaceCenter() - ply:GetShootPos()
 	local dot = aimvector:Dot( entVector ) / entVector:Length()
 	return (dot > directionAng)
 end
