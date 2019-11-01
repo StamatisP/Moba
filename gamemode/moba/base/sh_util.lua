@@ -1,3 +1,15 @@
+PerkTranslate = {
+	[1] = "Health",
+	[2] = "Speed",
+	[3] = "Damage",
+	[4] = "Cooldown Reduction",
+	["Health"] = 1,
+	["Speed"] = 2,
+	["Damage"] = 3,
+	["Cooldown Reduction"] = 4,
+	["CDR"] = 4
+}
+
 function normalize(min, max, val) 
     local delta = max - min
     return (val - min) / delta

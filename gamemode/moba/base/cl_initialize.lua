@@ -7,9 +7,12 @@ function GM:Initialize()
 		moba.spells = {};
 		moba.equipment = {};
 		moba.usedtokens = 0
-		moba.healthmult = 1
-		moba.speedmult = 1
-		moba.damagemult = 1
+		moba.mults = {
+			[1] = 1, // Health
+			[2] = 1, // Speed
+			[3] = 1, // Damage
+			[4] = 1 // CDR
+		}
 end
 
 local function _castSpell(slot)
@@ -24,7 +27,7 @@ local function _castSpell(slot)
 	
 	if MOBA.Spells[ spells[slot].spell ].CanCast(LocalPlayer()) then
 		RunConsoleCommand( "mb_cast", slot );
-		spells[slot].cooldown = RealTime() + time;
+		spells[slot].cooldown = RealTime() + (time / moba.mults[4])
 	else
 		surface.PlaySound("npc/roller/mine/rmine_blip3.wav")
 	end

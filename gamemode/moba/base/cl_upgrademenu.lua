@@ -1,3 +1,36 @@
+local function UpgradePerk(perk)
+	local spendabletokens = GetGlobalInt("UpgradeTokens", 0) - moba.usedtokens
+	if spendabletokens <= 0 then return end
+	if not moba.mults[perk] then return end
+	moba.mults[perk] = moba.mults[perk] + 0.2
+	moba.usedtokens = moba.usedtokens + 1
+	net.Start("mb_ClientRequestUpgrade")
+		net.WriteUInt(perk, 4)
+	net.SendToServer()
+end
+
+local PerkTranslate = {
+	[1] = "Health",
+	[2] = "Speed",
+	[3] = "Damage",
+	[4] = "Cooldown Reduction"
+}
+
+local message = "%s Multiplier: %i%%"
+local MultItem = {}
+function MultItem:Init()
+	self:SetText("")
+	timer.Simple(0, function() self:SetText(string.format(message, PerkTranslate[self.perk], moba.mults[self.perk] * 100)) end)
+end
+function MultItem:SetPerk(num)
+	self.perk = num
+end
+function MultItem:DoClick()
+	UpgradePerk(self.perk)
+	self.megaparent:Close()
+end
+vgui.Register("ItemButton", MultItem, "DButton")
+
 local function UpgradeMenu()
 	local spendabletokens = GetGlobalInt("UpgradeTokens", 0) - moba.usedtokens
 	local frame = vgui.Create("DFrame")
@@ -19,43 +52,11 @@ local function UpgradeMenu()
 	token_label:SetSize(300, 50)
 	token_label:SetText("Spendable tokens: " .. spendabletokens)
 
-	local healthitem = upgradelist:Add("DButton")
-	healthitem:SetText("Health Multiplier: " .. moba.healthmult * 100 .. "%")
-	healthitem:SetSize(300, 50)
-	function healthitem:DoClick()
-		if spendabletokens <= 0 then return end
-		moba.healthmult = moba.healthmult + 0.2
-		moba.usedtokens = moba.usedtokens + 1
-		net.Start("mb_ClientRequestUpgrade")
-			net.WriteUInt(1, 4)
-		net.SendToServer()
-		frame:Close()
-	end
-
-	local speeditem = upgradelist:Add("DButton")
-	speeditem:SetText("Speed Multiplier: " .. moba.speedmult * 100 .. "%")
-	speeditem:SetSize(300, 50)
-	function speeditem:DoClick()
-		if spendabletokens <= 0 then return end
-		moba.speedmult = moba.speedmult + 0.2
-		moba.usedtokens = moba.usedtokens + 1
-		net.Start("mb_ClientRequestUpgrade")
-			net.WriteUInt(2, 4)
-		net.SendToServer()
-		frame:Close()
-	end
-
-	local damageitem = upgradelist:Add("DButton")
-	damageitem:SetText("Damage Multiplier: " .. moba.damagemult * 100 .. "%")
-	damageitem:SetSize(300, 50)
-	function damageitem:DoClick()
-		if spendabletokens <= 0 then return end
-		moba.damagemult = moba.damagemult + 0.2
-		moba.usedtokens = moba.usedtokens + 1
-		net.Start("mb_ClientRequestUpgrade")
-			net.WriteUInt(3, 4)
-		net.SendToServer()
-		frame:Close()
+	for i = 1, #moba.mults do
+		local item = upgradelist:Add("ItemButton")
+		item:SetPerk(i)
+		item:SetSize(300, 50)
+		item.megaparent = frame
 	end
 end
 

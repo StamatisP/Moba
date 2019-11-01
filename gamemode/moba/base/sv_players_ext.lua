@@ -7,9 +7,12 @@ function meta:Initialize()
 		self.moba.spells = {}; //This is used for ONLY cooldowns
 		self.moba.pet = {} // you can have multiple pets
 		self.moba.usedtokens = 0
-		self.moba.speedmult = 1
-		self.moba.healthmult = 1
-		self.moba.damagemult = 1
+		self.moba.mults = {
+			[1] = 1, // Health
+			[2] = 1, // Speed
+			[3] = 1, // Damage
+			[4] = 1  // Cooldown
+		}
 end
 
 function meta:SetCharacter( char )
@@ -48,7 +51,7 @@ function meta:CastSpell( slot )
 	//print(slot)
 	//char.OnCast(spell)
 	
-	self.moba.spells[ slot ] = CurTime() + spell.Cooldown;
+	self.moba.spells[ slot ] = CurTime() + (spell.Cooldown / self.moba.mults[4])
 end
 
 function meta:HasSpell( slot )
@@ -74,4 +77,10 @@ function meta:ResetSpellCD(slot)
 			net.WriteUInt(slot, 4)
 		net.Send(self)
 	end)
+end
+
+function meta:GetMult(str)
+	if not PerkTranslate[str] then return end
+	local perk = PerkTranslate[str]
+	return self.moba.mults[perk]
 end

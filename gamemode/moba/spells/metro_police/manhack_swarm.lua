@@ -14,7 +14,8 @@ SPELL.CanCast = function(ply)
 end
 
 SPELL.OnCast	= function( ply )
-	ply:StartAnimation(MOBA.Spells["manhack_swarm"].Sequence, false, nil, true)
+	//ply:StartAnimation(MOBA.Spells["manhack_swarm"].Sequence, false, nil, true)
+	ply:DoCustomAnimEvent(PLAYERANIMEVENT_CUSTOM, ACT_GMOD_GESTURE_BECON)
 	ply:EmitSound("/npc/metropolice/takedown.wav", 0)
 	for i = 1, 15 do
 		timer.Simple(math.Rand(0, 1.5), function()

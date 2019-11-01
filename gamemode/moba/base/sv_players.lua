@@ -38,8 +38,8 @@ function GM:PlayerSpawn( ply )
 	ply:StripWeapons()
 	if char.Weapon then ply:Give(char.Weapon) end
 	ply:SetModel(char.Model)
-	ply:SetMaxHealth(char.Health * ply.moba.healthmult)
-	ply:SetHealth(char.Health * ply.moba.healthmult)
+	ply:SetMaxHealth(char.Health * ply.moba.mults[1])
+	ply:SetHealth(char.Health * ply.moba.mults[1])
 	char.OnInitialize(ply)
 	ply:SetupHands()
 end
@@ -119,14 +119,17 @@ function GM:PlayerSay(sender, text, teamchat)
 		return ""
 	elseif text == "!stopmovement" then
 		SetGlobalBool("botmove", false)
+		return ""
 	elseif text == "!startmovement" then
 		SetGlobalBool("botmove", true)
+		return ""
 	elseif text == "!testtokens" then
 		SetGlobalInt("UpgradeTokens", 20)
 		print("New Upgrade Tokens: " .. GetGlobalInt("UpgradeTokens", 0))
 		net.Start("mb_UpdateTokenCount")
 			net.WriteUInt(GetGlobalInt("UpgradeTokens", 0), 16)
 		net.Broadcast()
+		return ""
 	end
 end
 

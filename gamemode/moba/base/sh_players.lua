@@ -83,13 +83,17 @@ hook.Add("CalcMainActivity", "DogAnims", function(ply, vel)
 	end
 end)
 
+hook.Add("DoAnimationEvent", "SpellAnims", function(ply, event, data)
+	ply:AnimRestartGesture(GESTURE_SLOT_CUSTOM, data, true)
+end)
+
 hook.Add("Move", "PlayerSpeed", function(ply, mv)
 	local char = ply:GetCharacterDetails()
 	if char then
 		local name = char.Name
 		local speed = mv:GetMaxSpeed()
-		mv:SetMaxSpeed(speed * (char.Speed * ply.moba.speedmult))
-		mv:SetMaxClientSpeed(speed * (char.Speed * ply.moba.speedmult))
+		mv:SetMaxSpeed(speed * (char.Speed * ply.moba.mults[2]))
+		mv:SetMaxClientSpeed(speed * (char.Speed * ply.moba.mults[2]))
 	end
 end)
 
