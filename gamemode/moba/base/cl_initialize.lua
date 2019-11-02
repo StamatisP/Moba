@@ -34,7 +34,7 @@ local function _castSpell(slot)
 end
 
 function GM:Think()
-	if gui.IsGameUIVisible() then return end
+	//if gui.IsGameUIVisible() then return end
 	/*if ( input.IsKeyDown( KEY_Q ) ) then
 		_castSpell(1)
 	elseif ( input.IsKeyDown( KEY_E ) ) then

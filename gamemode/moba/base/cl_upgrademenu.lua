@@ -27,7 +27,9 @@ function MultItem:SetPerk(num)
 end
 function MultItem:DoClick()
 	UpgradePerk(self.perk)
-	self.megaparent:Close()
+	self.megaparent:AlphaTo(0, 0.2, 0, function(animdata, panel)
+		panel:Close()
+	end)
 end
 vgui.Register("ItemButton", MultItem, "DButton")
 
@@ -58,6 +60,8 @@ local function UpgradeMenu()
 		item:SetSize(300, 50)
 		item.megaparent = frame
 	end
+	frame:SetAlpha(0)
+	frame:AlphaTo(255, 0.2)
 end
 
 concommand.Add("mb_upgrademenu", UpgradeMenu)

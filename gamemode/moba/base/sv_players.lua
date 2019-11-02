@@ -20,7 +20,7 @@ function GM:PlayerInitialSpawn( ply )
 	net.Send(ply)
 	if mb_RoundStatus == ROUND_ACTIVE then
 		net.Start("mb_UpdateRoundTime")
-			net.WriteUInt(CurTime() - (15 * 60), 16)
+			net.WriteUInt(CurTime() - mb_RoundTime, 16)
 		net.Send(ply)
 	end
 end

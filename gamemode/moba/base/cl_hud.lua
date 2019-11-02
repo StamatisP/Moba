@@ -19,8 +19,8 @@ function GM:HUDPaint()
 		circletab[i]:SetRadius(x * 0.05)
 		if MOBA.Spells[spells[i].spell] and moba.spells and spells[i].cooldown then
 			local spellcd = spells[i].cooldown - RealTime()
-			if spellcd <= 0 then spellcd = 0 end
-			circletab[i]:SetAngles(0, normalize(0, MOBA.Spells[spells[i].spell].Cooldown, spellcd) * 360)
+			spellcd = math.Clamp(spellcd, 0, 360)
+			circletab[i]:SetAngles(0, normalize(0, MOBA.Spells[spells[i].spell].Cooldown / moba.mults[4], spellcd) * 360)
 			//local circlecol = InterpolateColor(Color(255, 0, 0), Color(0, 255, 0), MOBA.Spells[spells[i].spell].Cooldown, spellcd, 0)
 			circletab[i](Color(255, 0, 0))
 		end
@@ -47,7 +47,7 @@ function GM:HUDPaint()
 		draw.DrawText( txt, "Default", dist + (x * 0.05), y * 1.88, col, TEXT_ALIGN_CENTER )
 	end
 
-	draw.DrawText(team.TotalFrags(TEAM_BLUE), "DermaLarge", x / 2, y / 8, Color(70, 70, 255), TEXT_ALIGN_CENTER)
+	draw.DrawText(team.TotalFrags(TEAM_BLUE), "DermaLarge", x / 2, y / 8, Color(90, 90, 255), TEXT_ALIGN_CENTER)
 	draw.DrawText(team.TotalFrags(TEAM_RED), "DermaLarge", x * 1.5, y / 8, Color(255, 70, 70), TEXT_ALIGN_CENTER)
 end
 

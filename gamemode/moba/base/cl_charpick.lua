@@ -4,6 +4,7 @@ local function CreateCharMenu()
 	frame:SetSize(720, 520)
 	frame:Center()
 	frame:MakePopup()
+	frame:SetBackgroundBlur(true)
 
 	local scroll = vgui.Create("DScrollPanel", frame)
 	scroll:Dock(FILL)
@@ -16,7 +17,7 @@ local function CreateCharMenu()
 	local modelpreview
 	local chardesc
 	for k, v in pairs(MOBA.Characters) do
-		print(k)
+		//print(k)
 		if v.Disabled then continue end
 		local item = list:Add("DModelPanel")
 		if not v.Model then v.Model = "models/player/alyx.mdl" end
@@ -68,10 +69,20 @@ local function CreateCharMenu()
 	confirmbutton:SetSize(300, 50)
 	confirmbutton:SetText("Confirm Choice")
 	confirmbutton.DoClick = function()
+		if moba.character == GetConVar("mb_prefchar"):GetString() then
+			frame:AlphaTo(0, 0.2, 0, function(an, panel)
+				panel:Close()
+			end)
+			return
+		end
 		net.Start("mb_SendCharacterPick")
 			net.WriteString(GetConVar("mb_prefchar"):GetString())
 		net.SendToServer()
-		frame:Close()
+		frame:AlphaTo(0, 0.2, 0, function(an, panel)
+			panel:Close()
+		end)
 	end
+	frame:SetAlpha(0)
+	frame:AlphaTo(255, 0.2)
 end
 concommand.Add("mb_charmenu", CreateCharMenu)

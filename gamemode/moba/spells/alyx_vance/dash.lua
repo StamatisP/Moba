@@ -10,6 +10,10 @@ SPELL.OnInitalize = function()
 	
 end
 
+SPELL.CanCast = function(ply)
+	return true
+end
+
 SPELL.OnCast	= function( ply, target )
 	if not ply then print("no ply!") return end
 	local desired_pos = ply:GetAimVector()
