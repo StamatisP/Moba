@@ -1,9 +1,6 @@
-
 function GM:Initialize()
-end
-
-function GM:PlayerAuthed(ply, steamid, uniqueid)
-	
+	team.SetSpawnPoint(TEAM_BLUE, "hlhs_blue_start")
+	team.SetSpawnPoint(TEAM_BLUE, "hlhs_red_start")
 end
 
 function GM:PlayerInitialSpawn( ply )
@@ -135,12 +132,13 @@ end
 
 hook.Add("EntityTakeDamage", "PreventTeamKill", function(target, dmginfo)
 	local attacker = dmginfo:GetAttacker()
+	if dmginfo:IsDamageType(DMG_FALL) then return end
 	if not attacker:IsPlayer() then attacker = attacker:GetOwner() end
 	if target:IsPlayer() and attacker then
 		if target:Team() == attacker:Team() then
 			return true
 		end
-		dmginfo:ScaleDamage(attacker.moba.damagemult)
+		dmginfo:ScaleDamage(attacker.moba.mults[3])
 	end
 end)
 

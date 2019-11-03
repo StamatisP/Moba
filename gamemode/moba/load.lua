@@ -19,7 +19,9 @@ ROLE_HEAL		= 2;
 //Teams
 function GM:CreateTeams()
 	team.SetUp( TEAM_BLUE, "Blue Team", Color( 52, 107, 235, 255 ), true );
+	team.SetSpawnPoint(TEAM_BLUE, "hlhs_blue_start")
 	team.SetUp( TEAM_RED, "Red Team", Color( 235, 52, 52, 255 ), true );
+	team.SetSpawnPoint(TEAM_RED, "hlhs_red_start")
 	team.SetUp( TEAM_SPECTATOR, "Spectators", Color( 160, 60, 60, 255 ), false );
 end
 

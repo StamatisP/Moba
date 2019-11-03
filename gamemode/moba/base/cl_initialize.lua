@@ -15,6 +15,13 @@ function GM:Initialize()
 		}
 end
 
+function GM:InitPostEntity()
+	moba.cpmaster = ents.FindByClass("ent_mb_cap_master")[1]
+	/*for i = 1, moba.cpmaster:GetNumOfCaps() do
+		//moba.cap
+	end*/
+end
+
 local function _castSpell(slot)
 	local spells = moba.spells;
 	if ( !spells[slot] || spells[slot].spell == "" || RealTime() < spells[slot].cooldown ) then return; end
