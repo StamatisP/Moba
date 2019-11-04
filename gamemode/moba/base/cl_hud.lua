@@ -47,11 +47,11 @@ function GM:HUDPaint()
 		draw.DrawText( txt, "Default", dist + (x * 0.05), y * 1.88, col, TEXT_ALIGN_CENTER )
 	end
 
-	draw.DrawText(team.TotalFrags(TEAM_BLUE), "DermaLarge", x / 2, y / 8, Color(90, 90, 255), TEXT_ALIGN_CENTER)
-	draw.DrawText(team.TotalFrags(TEAM_RED), "DermaLarge", x * 1.5, y / 8, Color(255, 70, 70), TEXT_ALIGN_CENTER)
+	draw.DrawText(team.GetScore(TEAM_BLUE), "DermaLarge", x / 2, y / 8, Color(90, 90, 255), TEXT_ALIGN_CENTER)
+	draw.DrawText(team.GetScore(TEAM_RED), "DermaLarge", x * 1.5, y / 8, Color(255, 70, 70), TEXT_ALIGN_CENTER)
 
 	if moba.cpmaster:GetCap1() then
-		draw.DrawText(moba.cpmaster:GetCap1():GetCapProgress(), "DermaLarge", x / 2, y / 1.2, Color(90, 90, 255), TEXT_ALIGN_CENTER)
+		draw.DrawText(moba.cpmaster:GetCap1():GetCapProgress(), "DermaLarge", x, y / 1.2, Color(90, 90, 255), TEXT_ALIGN_CENTER)
 	else
 		print("no test cap!")
 	end

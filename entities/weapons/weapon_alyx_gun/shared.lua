@@ -74,17 +74,17 @@ function SWEP:ShootBullet( pl )
 		bullet.Num 		  = self.NumShots;
 		bullet.Src 		  = self.Owner:GetShootPos();
 		bullet.Dir 		  = self.Owner:GetAimVector();
-		bullet.Spread 	  = Vector(spread, spread, 1);
 		bullet.Tracer	  = 1;
 		bullet.TracerName = TracerName;
 		bullet.Force	  = self.Primary.Damage * 0.5;
 		bullet.AmmoType   = self.Primary.Ammo;
-	if self:GetMode(SMG_MODE) then
+	if self:GetMode() == SMG_MODE then
+		bullet.Spread 	  = Vector(spread, spread, 1);
 		bullet.Damage	  = self.Primary.Damage;
-	elseif (PISTOL_MODE) then
+	elseif self:GetMode() == PISTOL_MODE then
 		bullet.Spread 	  = Vector(0.01, 0.01, 0.01);
 		bullet.Damage	  = self.Primary.Damage * 2;
-	else
+	elseif self:GetMode() == RIFLE_MODE then
 		bullet.Spread 	  = Vector(0, 0, 0);
 		bullet.Damage	  = self.Primary.Damage * 4;
 	end
@@ -101,19 +101,20 @@ function SWEP:SecondaryAttack()
 	// ORDER IS PISTOL - SMG - RIFLE
 	if self:GetMode() == SMG_MODE then
 		// switch to rifle mode
-		self.Owner:EmitSound("weapons/smg1/switch_single.wav")
-		self.ViewModelFOV	= 70
+		self.ViewModelFOV	= 100
 		self:SetMode(RIFLE_MODE)
 		self.Primary.Automatic = false
 		self:SetHoldType("ar2")
 		//self:ResetSequenceInfo()
+		self.Owner:SetFOV(40, 0.2)
 		if CLIENT then
 			chat.AddText("Rifle")
 			self:AnimGun("weapon_rifle")
+		else
+			self.Owner:EmitSound("weapons/smg1/switch_single.wav")
 		end
 	elseif self:GetMode() == PISTOL_MODE then
 		//switch to smg mode
-		self.Owner:EmitSound("weapons/smg1/switch_burst.wav")
 		self.ViewModelFOV	= 60
 		self:SetMode(SMG_MODE)
 		self.Primary.Automatic = true
@@ -122,17 +123,21 @@ function SWEP:SecondaryAttack()
 		if CLIENT then
 			chat.AddText("SMG")
 			self:AnimGun("weapon_smg")
+		else
+			self.Owner:EmitSound("weapons/smg1/switch_burst.wav")
 		end
 	elseif self:GetMode() == RIFLE_MODE then
-		self.Owner:EmitSound("weapons/smg1/switch_single.wav")
-		self.ViewModelFOV	= 50
+		self.ViewModelFOV	= 40
 		self:SetMode(PISTOL_MODE)
 		self.Primary.Automatic = false
 		self:SetHoldType("pistol")
 		//self:ResetSequenceInfo()
+		self.Owner:SetFOV(0, 0.2)
 		if CLIENT then
 			chat.AddText("Pistol")
 			self:AnimGun("weapon_pistol")
+		else
+			self.Owner:EmitSound("weapons/smg1/switch_single.wav")
 		end
 	end
 	self:SetNextSecondaryFire(CurTime() + 1.5)
@@ -150,6 +155,6 @@ function SWEP:Reload()
 end
 
 function SWEP:AnimGun(anim)
-	print(self:LookupSequence(anim))
+	//print(self:LookupSequence(anim))
 	self:ResetSequence(self:LookupSequence(anim))
 end

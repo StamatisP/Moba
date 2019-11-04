@@ -18,5 +18,6 @@ SPELL.OnCast	= function( ply, target )
 	if not ply then print("no ply!") return end
 	local desired_pos = ply:GetAimVector()
 	desired_pos:Mul(MOBA.Spells["dash"].Range)
+	desired_pos:Mul(ply:GetMult("Speed"))
 	ply:SetVelocity(desired_pos)
 end

@@ -38,7 +38,8 @@ net.Receive("mb_ResetSpellCD", mb_ResetSpellCD)
 
 local function mb_RoundStart(len)
 	local time = net.ReadUInt(16)
-	hook.Run("mb_RoundStart")
+	hook.Run("mb_RoundStart", hl2_music)
+	mb_RoundStatus = ROUND_ACTIVE
 	local panel = vgui.Create("DPanel")
 	panel:SetSize(600, 100)
 	panel:SetPos(ScrW() / 2, 100)
@@ -58,12 +59,14 @@ net.Receive("mb_RoundStart", mb_RoundStart)
 
 local function mb_RoundEnd(len)
 	hook.Run("mb_RoundEnd")
+	mb_RoundStatus = ROUND_END
 end
 net.Receive("mb_RoundEnd", mb_RoundEnd)
 
 local function mb_UpdateRoundTime(len)
 	local time = net.ReadUInt(16)
-	hook.Run("mb_RoundStart")
+	hook.Run("mb_RoundStart", hl2_music)
+	mb_RoundStatus = ROUND_ACTIVE
 	local panel = vgui.Create("DPanel")
 	panel:SetSize(600, 100)
 	panel:SetPos(ScrW() / 2, 100)
@@ -84,6 +87,6 @@ net.Receive("mb_UpdateRoundTime", mb_UpdateRoundTime)
 local function mb_UpdateTokenCount(len)
 	local totaltokens = net.ReadUInt(16)
 	local spendabletokens = totaltokens - moba.usedtokens
-	chat.AddText(string.format("You have %i available tokens to spend!", spendabletokens))
+	chat.AddText(string.format("You have %i available tokens to spend! Press F2 to upgrade!", spendabletokens))
 end
 net.Receive("mb_UpdateTokenCount", mb_UpdateTokenCount)

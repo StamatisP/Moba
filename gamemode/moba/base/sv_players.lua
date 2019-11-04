@@ -1,6 +1,6 @@
 function GM:Initialize()
 	team.SetSpawnPoint(TEAM_BLUE, "hlhs_blue_start")
-	team.SetSpawnPoint(TEAM_BLUE, "hlhs_red_start")
+	team.SetSpawnPoint(TEAM_RED, "hlhs_red_start")
 end
 
 function GM:PlayerInitialSpawn( ply )
@@ -49,10 +49,10 @@ function GM:PlayerDeath( victim, inflictor, attacker )
 	if ( char ) then
 		char.OnDeath( victim );
 	end
-	victim.RespawnTime = CurTime() + 3
+	victim.RespawnTime = CurTime() + 5
 
 	if not attacker:IsPlayer() and attacker:GetOwner() then attacker = attacker:GetOwner() end
-	if attacker == victim then return end
+	if attacker == victim or attacker == game.GetWorld() then return end
 	char = attacker:GetCharacterDetails()
 	if not char then return end
 	char.OnKill(attacker, victim)
@@ -132,7 +132,7 @@ end
 
 hook.Add("EntityTakeDamage", "PreventTeamKill", function(target, dmginfo)
 	local attacker = dmginfo:GetAttacker()
-	if dmginfo:IsDamageType(DMG_FALL) then return end
+	if dmginfo:IsDamageType(DMG_FALL) or dmginfo:IsDamageType(DMG_CRUSH) then return end
 	if not attacker:IsPlayer() then attacker = attacker:GetOwner() end
 	if target:IsPlayer() and attacker then
 		if target:Team() == attacker:Team() then

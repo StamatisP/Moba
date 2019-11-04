@@ -1,4 +1,4 @@
-local hl2_music = {
+hl2_music = {
 	[1] = {song = "music/hl1_song10.mp3", duration = 104},
 	[2] = {song = "music/hl2_song12_long.mp3", duration = 74},
 	[3] = {song = "music/hl2_song14.mp3", duration = 159},
@@ -14,33 +14,44 @@ local hl2_music = {
 	[13] = {song = "music/vlvx_song11.mp3", duration = 79},
 	[14] = {song = "music/vlvx_song12.mp3", duration = 121},
 	[15] = {song = "music/vlvx_song18.mp3", duration = 185},
-	[16] = {song = "music/vlvx_song21.mp3", duration = 170}
+	[16] = {song = "music/vlvx_song21.mp3", duration = 170},
+	[17] = {song = "music/hl2_song3.mp3", duration = 90},
+	[18] = {song = "music/hl2_song16.mp3", duration = 170}
+}
+
+intermission_music = {
+	[1] = {song = "music/hl1_song17.mp3", duration = 123},
+	[2] = {song = "music/hl1_song14.mp3", duration = 90},
+	[3] = {song = "music/hl2_song30.mp3", duration = 104},
+	[4] = {song = "music/hl2_song2.mp3", duration = 172}
 }
 
 local CurrentMusic
 local MusicChannel
-local function PlayMusic()
+function PlayMusic(musictab)
 	local music_duration = 1
 	if timer.Exists("PlayMusic") then timer.Remove("PlayMusic") end
+	if MusicChannel then MusicChannel:Stop() end
 	timer.Create("PlayMusic", music_duration, 0, function()
-		print("boss music change")
+		print("game music change")
 		math.randomseed(os.time())
-		CurrentMusic = hl2_music[GetPseudoRandomNumber(#hl2_music)]
+		CurrentMusic = musictab[GetPseudoRandomNumber(#musictab)]
 		sound.PlayFile("sound/"..CurrentMusic.song, "", function(audio_channel, err, errorName)
 			if err and errorName then
 				ErrorNoHalt(err)
 				print(errorName)
 			end
 			MusicChannel = audio_channel
-			MusicChannel:SetVolume(0.6)
+			MusicChannel:SetVolume(0.55)
 		end)
 		music_duration = CurrentMusic.duration
-		timer.Adjust("PlayMusic", music_duration)
+		timer.Adjust("PlayMusic", music_duration + 4)
 	end)
 end
 hook.Add("mb_RoundStart", "StartMusic", PlayMusic)
+hook.Add("mb_Intermission", "IntermissionMusic", PlayMusic)
 
-local function StopMusic()
+function StopMusic()
 	if MusicChannel then
 		MusicChannel:Stop()
 		timer.Destroy("PlayMusic")

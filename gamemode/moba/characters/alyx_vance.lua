@@ -1,11 +1,8 @@
 CHARACTER.Name			= "Alyx Vance";
 CHARACTER.Icon			= "";
-CHARACTER.Role			= ROLE_HEAL;
 CHARACTER.Model			= "models/sirgibs/ragdolls/hl2/alyx_enhanced_player.mdl";
 CHARACTER.Weapon		= "weapon_alyx_gun";
 CHARACTER.Health 		= 200
-
-CHARACTER.AttackDmg		= 20 * 4; 
 
 CHARACTER.Speed			= 1.6; // this is a multiplier
 

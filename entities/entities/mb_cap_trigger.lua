@@ -34,7 +34,13 @@ if SERVER then
 				cap:SetCapStatus(1)
 				print("BLUE TEAM HAS CAPTURED THE POINT " .. cap:GetName())
 				self:TriggerOutput("OnCapTeam1", entity)
+				local plys, num = ents.FindPlayersInBox(self.mins, self.maxs)
+				for i = 1, num do
+					local ply = plys[i]
+					ply:EmitSound(RandomVO(ply:GetCharacter(), "happy"))
+				end
 			end
+
 			if team == TEAM_RED then
 				// red is attempting to cap maxed out blue cap
 				cap:SetCapProgress(math.Approach(cap:GetCapProgress(), -cap:GetMaxProgress(), 1 * mult))
@@ -47,7 +53,13 @@ if SERVER then
 				cap:SetCapStatus(2)
 				print("RED TEAM HAS CAPTURED THE POINT " .. cap:GetName())
 				self:TriggerOutput("OnCapTeam2", entity)
+				local plys, num = ents.FindPlayersInBox(self.mins, self.maxs)
+				for i = 1, num do
+					local ply = plys[i]
+					ply:EmitSound(RandomVO(ply:GetCharacter(), "happy"))
+				end
 			end
+
 			if team == TEAM_BLUE then
 				// blue is attempting to cap maxed out red cap
 				cap:SetCapProgress(math.Approach(cap:GetCapProgress(), cap:GetMaxProgress(), 1 * mult))
@@ -63,7 +75,7 @@ if SERVER then
 	end
 
 	function ENT:Touch(entity)
-		if not entity:IsPlayer() then return end
+		if not entity:IsPlayer() or mb_RoundStatus ~= ROUND_ACTIVE then return end
 		local cap = self.cap_point
 		local plys, num = ents.FindPlayersInBox(self.mins, self.maxs)
 		if num > 1 then

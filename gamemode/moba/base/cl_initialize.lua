@@ -13,6 +13,7 @@ function GM:Initialize()
 			[3] = 1, // Damage
 			[4] = 1 // CDR
 		}
+	mb_RoundStatus = ROUND_PREGAME
 end
 
 function GM:InitPostEntity()
@@ -20,6 +21,9 @@ function GM:InitPostEntity()
 	/*for i = 1, moba.cpmaster:GetNumOfCaps() do
 		//moba.cap
 	end*/
+	if mb_RoundStatus == ROUND_PREGAME then
+		hook.Run("mb_Intermission", intermission_music)
+	end
 end
 
 local function _castSpell(slot)

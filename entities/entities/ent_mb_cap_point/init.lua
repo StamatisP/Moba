@@ -24,6 +24,16 @@ function ENT:Initialize()
 	self.master:SetCap1(self)
 end
 
+function ENT:Think()
+	if self:GetCapStatus() == 1 then
+		team.AddScore(TEAM_BLUE, 1)
+	elseif self:GetCapStatus() == 2 then
+		team.AddScore(TEAM_RED, 1)
+	end
+	self:NextThink(CurTime() + 1)
+	return true
+end
+
 function ENT:OnCap(team)
 	self:SetSkin(team)
 	self.cap_area:TriggerOutput("OnCapTeam"..team, self, "prop_"..self:GetName()..",Skin,"..team..",0,-1")

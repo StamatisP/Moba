@@ -13,7 +13,7 @@ local PerkTranslate = {
 	[1] = "Health",
 	[2] = "Speed",
 	[3] = "Damage",
-	[4] = "Cooldown Reduction"
+	[4] = "Spell Cooldown"
 }
 
 local message = "%s Multiplier: %i%%"
