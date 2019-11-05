@@ -2,7 +2,7 @@ SPELL.Name		= "Dash";
 SPELL.Icon		= "";
 SPELL.Range		= 600;
 //SPELL.Sequence	= "canal5breact2"; //What sequence/animation should it play
-SPELL.Cooldown	= 1;
+SPELL.Cooldown	= 3
 
 SPELL.Description = "Dashes you forward " .. SPELL.Range .. " units."
 

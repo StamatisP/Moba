@@ -17,8 +17,8 @@ CHARACTER.Equipment = {
 
 CHARACTER.Spells	= {
 	[1] = "dash",
-	[2] = "",
-	[3] = "",
+	[2] = "hack",
+	[3] = "alyx_rightclick",
 	[4] = ""
 };
 

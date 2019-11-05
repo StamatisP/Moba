@@ -1,6 +1,6 @@
 SPELL.Name		= "Throw Ball";
 SPELL.Icon		= "";
-SPELL.Range		= 2000;
+SPELL.Range		= 200;
 //SPELL.Sequence	= "canal5breact2"; //What sequence/animation should it play
 SPELL.Cooldown	= 5;
 

@@ -81,7 +81,7 @@ function PrettyPrintSpells(spell)
 	return string.gsub(noscores, "%s%a", string.upper)
 end
 
-local last_rand
+local last_rand = last_rand or nil
 function GetPseudoRandomNumber(max_num)
 	math.randomseed(os.time())
 	local rand = math.random(max_num)

@@ -1,5 +1,7 @@
 CreateClientConVar("mb_prefchar", "alyx_vance", true, "What your preferred character is.")
 local isChatOpen = false
+local m_failedCast = false
+local m_LastCastSpell = nil
 
 function GM:Initialize()
 	moba = {};
@@ -35,14 +37,32 @@ local function _castSpell(slot)
 	//PrintTable( spells[slot] );
 	local time = MOBA.Spells[ spells[slot].spell ].Cooldown;
 	if ( !time ) then return; end
+	m_LastCastSpell = MOBA.Spells[ spells[slot].spell ]
 	
-	if MOBA.Spells[ spells[slot].spell ].CanCast(LocalPlayer()) then
+	if m_LastCastSpell.CanCast(LocalPlayer()) then
 		RunConsoleCommand( "mb_cast", slot );
 		spells[slot].cooldown = RealTime() + (time / moba.mults[4])
 	else
 		surface.PlaySound("npc/roller/mine/rmine_blip3.wav")
+		m_failedCast = true
+		timer.Simple(0.2, function()
+			m_failedCast = false
+		end)
 	end
 end
+
+local function SpellRangeWireframe()
+	if not m_failedCast then return end
+	render.SetColorMaterial()
+	local pos = LocalPlayer():GetPos()
+	local radius = m_LastCastSpell.Range
+	local wideSteps = 10
+	local tallSteps = 10
+
+	render.DrawWireframeSphere( pos, radius, wideSteps, tallSteps, Color( 255, 255, 255, 255 ), true)
+end
+
+hook.Add("PostDrawTranslucentRenderables", "SpellRangeWireframe", SpellRangeWireframe)
 
 function GM:Think()
 	//if gui.IsGameUIVisible() then return end

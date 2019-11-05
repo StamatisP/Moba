@@ -51,9 +51,16 @@ function GM:HUDPaint()
 	draw.DrawText(team.GetScore(TEAM_RED), "DermaLarge", x * 1.5, y / 8, Color(255, 70, 70), TEXT_ALIGN_CENTER)
 
 	if moba.cpmaster:GetCap1() then
-		draw.DrawText(moba.cpmaster:GetCap1():GetCapProgress(), "DermaLarge", x, y / 1.2, Color(90, 90, 255), TEXT_ALIGN_CENTER)
+		local cap =  moba.cpmaster:GetCap1()
+		local prog = cap:GetCapProgress()
+		local col = Color(90, 90, 255)
+		if prog <= 0 then
+			col = Color(255, 90, 90)
+		end
+		draw.DrawText(math.Remap(prog, -cap:GetMaxProgress(), cap:GetMaxProgress(), -100, 100), "DermaLarge", x, y / 1.2, Color(90, 90, 255), TEXT_ALIGN_CENTER)
 	else
-		print("no test cap!")
+		//print("no test cap!")
+		return
 	end
 end
 
