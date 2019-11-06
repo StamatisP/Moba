@@ -1,3 +1,4 @@
+CHARACTER.Disabled = true
 CHARACTER.Name			= "Laszlo"
 CHARACTER.Icon			= ""
 CHARACTER.Role			= ROLE_TANK

@@ -14,7 +14,8 @@ local function mb_Spell( len )
 	local spells = net.ReadTable();
 	
 	for i = 1, #spells do
-		spells[i] = { spell = spells[i], cooldown = 0 };
+		local spell_internal = MOBA.Characters[ moba.character ].Spells[i]
+		spells[i] = { spell = spells[i], cooldown = MOBA.Spells[spell_internal].Cooldown + RealTime() };
 	end
 
 	moba.spells = spells;
@@ -72,7 +73,7 @@ local function mb_UpdateRoundTime(len)
 	panel:SetPos(ScrW() / 2, 100)
 	print(string.ToMinutesSeconds(time))
 	function panel:Paint(w, h)
-		draw.SimpleTextOutlined(string.ToMinutesSeconds(time), "DermaLarge", 0, 0, Color(255, 255, 255, 255), TEXT_ALIGN_LEFT, TEXT_ALIGN_TOP, 1, Color(0,0,0))
+		draw.SimpleTextOutlined(string.ToMinutesSeconds(time), "DermaLarge", 0, 0, Color(255, 255, 255, 255), TEXT_ALIGN_CENTER, TEXT_ALIGN_TOP, 1, Color(0,0,0))
 	end
 	timer.Create("SetRoundTime", 1, 0, function()
 		if time <= 0 then
@@ -90,3 +91,26 @@ local function mb_UpdateTokenCount(len)
 	chat.AddText(string.format("You have %i available tokens to spend! Press F2 to upgrade!", spendabletokens))
 end
 net.Receive("mb_UpdateTokenCount", mb_UpdateTokenCount)
+
+local function hlhs_cpcaptured(len)
+	local id = net.ReadUInt(16)
+	local status = net.ReadUInt(3)
+	print("spawning dlight in hlhs capcaptured", status)
+	// status 1 == blue cap, status 2 == red cap
+
+	local cap = Entity(id)
+	if not cap then ErrorNoHalt("NO CAP?? ON GOD, NO CAP") end
+
+	local dlight = DynamicLight(id)
+	if dlight then
+		dlight.pos = cap:GetPos() + Vector(0, 0, 15)
+		if status == 2 then dlight.r = 255 else dlight.r = 0 end
+		dlight.g = 0
+		if status == 1 then dlight.b = 255 else dlight.b = 0 end
+		dlight.brightness = 10
+		dlight.Decay = 200
+		dlight.Size = 512
+		dlight.DieTime = CurTime() + 5
+	end
+end
+net.Receive("hlhs_cpcaptured", hlhs_cpcaptured)

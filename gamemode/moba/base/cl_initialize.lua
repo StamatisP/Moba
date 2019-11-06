@@ -39,10 +39,11 @@ local function _castSpell(slot)
 	if ( !time ) then return; end
 	m_LastCastSpell = MOBA.Spells[ spells[slot].spell ]
 	
-	if m_LastCastSpell.CanCast(LocalPlayer()) then
+	if m_LastCastSpell.CanCast(LocalPlayer()) and not m_LastCastSpell.Passive then
 		RunConsoleCommand( "mb_cast", slot );
 		spells[slot].cooldown = RealTime() + (time / moba.mults[4])
 	else
+		if m_LastCastSpell.Passive then return end
 		surface.PlaySound("npc/roller/mine/rmine_blip3.wav")
 		m_failedCast = true
 		timer.Simple(0.2, function()
@@ -94,21 +95,6 @@ hook.Add("FinishMove", "InputManager", InputManager)
 
 function GM:PlayerBindPress( ply, bind )
 end
-
-local function HideHUD( name )
-	local Tbl = { 
-	[ "CHudHealth" ] = true, 
-	[ "CHudAmmo" ]   = true, 
-	[ "CHudSecondaryAmmo" ] = true, 
-	[ "CHudBattery" ] = true,
-	[ "CHudWeaponSelection" ] = true
-	}; 
-	
-	if ( Tbl[ name ] ) then
-		return false;
-	end
-end
-hook.Add( "HUDShouldDraw", "HeistHidHUD", HideHUD );
 
 local function ThirdPerson(ply, pos, angles, fov)
 	if moba and moba.character == "dog" then

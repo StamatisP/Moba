@@ -39,7 +39,7 @@ CHARACTER.VoiceOver = {
 }
 
 CHARACTER.OnDeath	= function( ply )
-	ply:EmitSound(RandomVO("metro_police", "death"))
+	ply:PlayerVO("death")
 end
 
 CHARACTER.OnInitialize 	= function( ply )
@@ -50,5 +50,5 @@ CHARACTER.OnAttack	= function( ply, bot, enemy )
 end
 
 CHARACTER.OnKill = function(ply, victim)
-	ply:EmitSound(RandomVO("metro_police", "happy"))
+	ply:PlayerVO("happy")
 end

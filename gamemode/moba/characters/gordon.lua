@@ -1,3 +1,4 @@
+CHARACTER.Disabled = true
 CHARACTER.Name			= "Gordon Freeman"
 CHARACTER.Icon			= ""
 CHARACTER.Role			= ROLE_TANK

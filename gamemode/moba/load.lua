@@ -39,6 +39,7 @@ if ( SERVER ) then
 	util.AddNetworkString("mb_UpdateRoundTime")
 	util.AddNetworkString("mb_UpdateTokenCount")
 	util.AddNetworkString("mb_ClientRequestUpgrade")
+	util.AddNetworkString("hlhs_cpcaptured")
 end
 
 if SERVER then

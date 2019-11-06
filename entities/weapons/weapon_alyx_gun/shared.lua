@@ -19,7 +19,7 @@ SWEP.WeaponSlot		= PRIMARY_SLOT;
 
 SWEP.Primary.Damage			= 10;
 SWEP.Primary.ClipSize		= 30;
-SWEP.Primary.DefaultClip	= 999;
+SWEP.Primary.DefaultClip	= 9999;
 SWEP.Primary.Automatic		= true;
 SWEP.Primary.Ammo			= "smg1";
 SWEP.Primary.Sound			= Sound( "Weapon_SMG1.Single" );

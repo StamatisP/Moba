@@ -41,7 +41,7 @@ CHARACTER.VoiceOver = {
 }
 
 CHARACTER.OnDeath	= function( ply, bot )
-	ply:EmitSound(RandomVO("dog", "sad"))
+	ply:PlayerVO("sad")
 	if table.Count(ply.moba.pet) == 1 then
 		print("ply has ball, removing") 
 		ply.moba.pet[ply.ballindex]:Remove()
@@ -72,7 +72,7 @@ CHARACTER.OnInitialize 	= function( ply )
 end
 
 CHARACTER.OnKill = function(ply, victim)
-	ply:EmitSound(RandomVO("dog", "happy"))
+	ply:PlayerVO("happy")
 end
 
 CHARACTER.CalcMainActivity = function(ply, vel)

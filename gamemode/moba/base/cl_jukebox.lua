@@ -26,8 +26,8 @@ intermission_music = {
 	[4] = {song = "music/hl2_song2.mp3", duration = 172}
 }
 
-local CurrentMusic
-local MusicChannel
+local CurrentMusic = CurrentMusic or nil
+local MusicChannel = MusicChannel or nil
 function PlayMusic(musictab)
 	local music_duration = 1
 	if timer.Exists("PlayMusic") then timer.Remove("PlayMusic") end
@@ -35,7 +35,9 @@ function PlayMusic(musictab)
 	timer.Create("PlayMusic", music_duration, 0, function()
 		print("game music change")
 		math.randomseed(os.time())
-		CurrentMusic = musictab[GetPseudoRandomNumber(#musictab)]
+		repeat
+			CurrentMusic = musictab[GetPseudoRandomNumber(#musictab)]
+		until(file.Exists("sound/"..CurrentMusic.song, "GAME"))
 		sound.PlayFile("sound/"..CurrentMusic.song, "", function(audio_channel, err, errorName)
 			if err and errorName then
 				ErrorNoHalt(err)

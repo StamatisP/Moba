@@ -6,6 +6,27 @@ local circletab = {
 	[3] = filledcircle:Copy(),
 	[4] = filledcircle:Copy(),
 }
+
+local function DrawSpellBox(spell, posx, posy)
+	// fuck it ill do it another time
+	local col = Color( 255, 255, 255, 255 );
+	
+	if ( moba.spells[ i ].cooldown > RealTime() ) then
+		col = Color( 160, 60, 60, 255 );
+	end
+
+	// Spell name and shadow
+	draw.DrawText( txt, "Default", dist + (x * 0.05) + 2, (y * 1.88) + 2, Color(0, 0, 0), TEXT_ALIGN_CENTER )
+	draw.DrawText( txt, "Default", dist + (x * 0.05), y * 1.88, col, TEXT_ALIGN_CENTER )
+end
+
+local SpellKeybind = {
+	[1] = "Q",
+	[2] = "E",
+	[3] = "F",
+	[4] = "R"
+}
+
 function GM:HUDPaint()
 	local x, y = ScrW() / 2, ScrH() / 2;
 	if not moba and not moba.character then return end
@@ -17,7 +38,7 @@ function GM:HUDPaint()
 
 		circletab[i]:SetPos(dist + 50, (y * 1.79) + 50)
 		circletab[i]:SetRadius(x * 0.05)
-		if MOBA.Spells[spells[i].spell] and moba.spells and spells[i].cooldown then
+		if MOBA.Spells[spells[i].spell] and spells and spells[i].cooldown then
 			local spellcd = spells[i].cooldown - RealTime()
 			spellcd = math.Clamp(spellcd, 0, 360)
 			circletab[i]:SetAngles(0, normalize(0, MOBA.Spells[spells[i].spell].Cooldown / moba.mults[4], spellcd) * 360)
@@ -42,26 +63,26 @@ function GM:HUDPaint()
 		if ( moba.spells[ i ].cooldown > RealTime() ) then
 			col = Color( 160, 60, 60, 255 );
 		end
+
+		if not MOBA.Spells[spell_internal].Passive then
+			draw.DrawText(SpellKeybind[i], "Default", dist + 2, (y * 1.79) + 2, Color(0, 0, 0), TEXT_ALIGN_LEFT)
+			draw.DrawText(SpellKeybind[i], "Default", dist, y * 1.79, color_white, TEXT_ALIGN_LEFT)
+		end
 		
 		draw.DrawText( txt, "Default", dist + (x * 0.05) + 2, (y * 1.88) + 2, Color(0, 0, 0), TEXT_ALIGN_CENTER )
 		draw.DrawText( txt, "Default", dist + (x * 0.05), y * 1.88, col, TEXT_ALIGN_CENTER )
-	end
 
-	draw.DrawText(team.GetScore(TEAM_BLUE), "DermaLarge", x / 2, y / 8, Color(90, 90, 255), TEXT_ALIGN_CENTER)
-	draw.DrawText(team.GetScore(TEAM_RED), "DermaLarge", x * 1.5, y / 8, Color(255, 70, 70), TEXT_ALIGN_CENTER)
-
-	if moba.cpmaster:GetCap1() then
-		local cap =  moba.cpmaster:GetCap1()
-		local prog = cap:GetCapProgress()
-		local col = Color(90, 90, 255)
-		if prog <= 0 then
-			col = Color(255, 90, 90)
+		if MOBA.Spells[spell_internal].Ultimate then
+			draw.DrawText( "ULTIMATE", "Default", dist + (x * 0.05) + 2, (y * 1.96) + 2, Color(0, 0, 0), TEXT_ALIGN_CENTER )
+			draw.DrawText( "ULTIMATE", "Default", dist + (x * 0.05), y * 1.96, col, TEXT_ALIGN_CENTER )
 		end
-		draw.DrawText(math.Remap(prog, -cap:GetMaxProgress(), cap:GetMaxProgress(), -100, 100), "DermaLarge", x, y / 1.2, Color(90, 90, 255), TEXT_ALIGN_CENTER)
-	else
-		//print("no test cap!")
-		return
 	end
+
+	draw.DrawText(team.GetScore(TEAM_BLUE), "DermaLarge", (x / 1.05) + 2, (y / 8) + 2, Color(0, 0, 0), TEXT_ALIGN_CENTER)
+	draw.DrawText(team.GetScore(TEAM_BLUE), "DermaLarge", x / 1.05, y / 8, Color(130, 130, 255), TEXT_ALIGN_CENTER)
+
+	draw.DrawText(team.GetScore(TEAM_RED), "DermaLarge", (x * 1.1) + 2, (y / 8) + 2, Color(0, 0, 0), TEXT_ALIGN_CENTER)
+	draw.DrawText(team.GetScore(TEAM_RED), "DermaLarge", x * 1.1, y / 8, Color(255, 70, 70), TEXT_ALIGN_CENTER)
 end
 
 local wMat = Material("models/debug/debugwhite")
@@ -114,3 +135,15 @@ local function PostPlayerDraw(ply)
 	end
 end
 hook.Add("PostPlayerDraw", "PlayerHealth", PostPlayerDraw)
+
+local function HideHUD( name )
+	local Tbl = { 
+	[ "CHudSecondaryAmmo" ] = true, 
+	[ "CHudBattery" ] = true,
+	}; 
+	
+	if ( Tbl[ name ] ) then
+		return false;
+	end
+end
+hook.Add( "HUDShouldDraw", "HeistHidHUD", HideHUD );

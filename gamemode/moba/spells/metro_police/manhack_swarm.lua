@@ -3,6 +3,7 @@ SPELL.Icon		= "";
 SPELL.Range		= -1;
 SPELL.Sequence	= "gesture_signal_forward"; //What sequence/animation should it play
 SPELL.Cooldown	= 60;
+SPELL.Ultimate = true
 
 SPELL.Description = "Spawns a swarm of Manhacks."
 

@@ -56,6 +56,7 @@ function GM:PlayerDeath( victim, inflictor, attacker )
 	char = attacker:GetCharacterDetails()
 	if not char then return end
 	char.OnKill(attacker, victim)
+	team.AddScore(attacker:Team(), 1)
 end
 
 function GM:ShouldCollide( ply, bot )

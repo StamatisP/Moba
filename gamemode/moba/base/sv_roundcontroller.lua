@@ -14,7 +14,7 @@ function StartRound()
 	timer.Simple(mb_RoundTime, function()
 		EndRound()
 	end)
-	timer.Create("UpgradeTokenDist", mb_RoundTime / 7, 7, function()
+	timer.Create("UpgradeTokenDist", mb_RoundTime / 10, 10, function()
 		// okay, my idea for upgrade tokens is like this
 		// you can spend a point to upgrade health, speed, or damage
 		// each token is a 20% increase, relative to the character

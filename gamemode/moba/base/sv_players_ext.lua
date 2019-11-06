@@ -84,3 +84,9 @@ function meta:GetMult(str)
 	local perk = PerkTranslate[str]
 	return self.moba.mults[perk]
 end
+
+function meta:PlayerVO(emotion)
+	local vo = MOBA.Characters[self:GetCharacter()].VoiceOver[emotion]
+	if not vo then return end
+	self:EmitSound(vo[GetPseudoRandomNumber(#vo)])
+end

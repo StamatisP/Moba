@@ -1,6 +1,6 @@
 SPELL.Name		= "Dash";
 SPELL.Icon		= "";
-SPELL.Range		= 600;
+SPELL.Range		= 500;
 //SPELL.Sequence	= "canal5breact2"; //What sequence/animation should it play
 SPELL.Cooldown	= 3
 

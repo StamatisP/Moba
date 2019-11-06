@@ -2,7 +2,7 @@ CHARACTER.Name			= "Alyx Vance";
 CHARACTER.Icon			= "";
 CHARACTER.Model			= "models/sirgibs/ragdolls/hl2/alyx_enhanced_player.mdl";
 CHARACTER.Weapon		= "weapon_alyx_gun";
-CHARACTER.Health 		= 200
+CHARACTER.Health 		= 120
 
 CHARACTER.Speed			= 1.6; // this is a multiplier
 
@@ -18,8 +18,8 @@ CHARACTER.Equipment = {
 CHARACTER.Spells	= {
 	[1] = "dash",
 	[2] = "hack",
-	[3] = "alyx_rightclick",
-	[4] = ""
+	[3] = "hack_everything",
+	[4] = "alyx_rightclick"
 };
 
 // sad is for dying, happy is for winning/kill streaks, angry is for losing
@@ -49,11 +49,12 @@ CHARACTER.VoiceOver = {
 // also alyx voice clip al_Heregoes might be of interest for an ult, holdit, holdon
 
 CHARACTER.OnDeath	= function( ply )
+	ply:PlayerVO("sad")
 end
 
 CHARACTER.OnInitialize 	= function( ply )
 end
 
 CHARACTER.OnKill = function(ply, victim)
-	
+	ply:PlayerVO("happy")
 end
