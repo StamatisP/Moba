@@ -1,6 +1,6 @@
 local function mb_SendCharacterPick(len, ply)
 	local char = net.ReadString()
-	ply:KillSilent()
+	ply:Kill()
 	ply:SetCharacter(char)
 	local theteam = team.BestAutoJoinTeam()
 	ply:SetTeam(theteam)

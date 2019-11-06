@@ -45,4 +45,8 @@ function EndRound()
 	else
 		print("Stalemate")
 	end
+	for k, v in ipairs(player.GetAll()) do
+		print(v:Name() .. " Accolades: ")
+		PrintTable(v.moba.accolades)
+	end
 end

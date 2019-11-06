@@ -19,10 +19,13 @@ ROLE_HEAL		= 2;
 //Teams
 function GM:CreateTeams()
 	team.SetUp( TEAM_BLUE, "Blue Team", Color( 52, 107, 235, 255 ), true );
-	team.SetSpawnPoint(TEAM_BLUE, "hlhs_blue_start")
+	team.SetSpawnPoint(TEAM_BLUE, {"hlhs_blue_start", "info_player_counterterrorist"})
+
 	team.SetUp( TEAM_RED, "Red Team", Color( 235, 52, 52, 255 ), true );
-	team.SetSpawnPoint(TEAM_RED, "hlhs_red_start")
-	team.SetUp( TEAM_SPECTATOR, "Spectators", Color( 160, 60, 60, 255 ), false );
+	team.SetSpawnPoint(TEAM_RED, {"hlhs_red_start", "info_player_terrorist"})
+
+	team.SetUp( TEAM_SPECTATOR, "Spectators", Color( 160, 60, 60, 255 ), false )
+	team.SetSpawnPoint(TEAM_SPECTATOR, {"info_player_start", "info_player_deathmatch"})
 end
 
 if ( SERVER ) then
@@ -40,6 +43,7 @@ if ( SERVER ) then
 	util.AddNetworkString("mb_UpdateTokenCount")
 	util.AddNetworkString("mb_ClientRequestUpgrade")
 	util.AddNetworkString("hlhs_cpcaptured")
+	util.AddNetworkString("hlhs_PlayerKillPlayer")
 end
 
 if SERVER then

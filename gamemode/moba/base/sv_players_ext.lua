@@ -13,6 +13,7 @@ function meta:Initialize()
 			[3] = 1, // Damage
 			[4] = 1  // Cooldown
 		}
+		self.moba.accolades = {}
 end
 
 function meta:SetCharacter( char )
@@ -89,4 +90,13 @@ function meta:PlayerVO(emotion)
 	local vo = MOBA.Characters[self:GetCharacter()].VoiceOver[emotion]
 	if not vo then return end
 	self:EmitSound(vo[GetPseudoRandomNumber(#vo)])
+end
+
+function meta:AddAccolade(key, value)
+	if not HLHS_AccoladeList[key] then ErrorNoHalt("Error, " .. key .. " is not a valid Accolade.") return end
+	if not self.moba.accolades[key] then
+		self.moba.accolades[key] = value
+	else
+		self.moba.accolades[key] = self.moba.accolades[key] + value
+	end
 end

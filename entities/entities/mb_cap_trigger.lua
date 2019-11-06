@@ -138,6 +138,7 @@ if SERVER then
 	end
 
 	function ENT:KeyValue(k, v)	
+		//print(k, v)
 		if ( string.Left( k, 2 ) == "On" ) then
 			self:StoreOutput( k, v )
 			print(k, v)

@@ -66,7 +66,7 @@ function SWEP:PrimaryAttack()
 	end
 end
 
-function SWEP:ShootBullet( pl )
+function SWEP:ShootBullet()
 	local spread = 0.03;
 	local recoil = 0.3;
 	
@@ -94,6 +94,7 @@ function SWEP:ShootBullet( pl )
 	self.Owner:ViewPunchReset( 1 );
 	self.Owner:ViewPunch( recoil );
 	self.Owner:FireBullets( bullet );
+	self:ShootEffects()
 	self:TakePrimaryAmmo( 1 );
 end
 

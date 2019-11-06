@@ -27,7 +27,7 @@ local SpellKeybind = {
 	[4] = "R"
 }
 
-function GM:HUDPaint()
+function HLHS_Paint()
 	local x, y = ScrW() / 2, ScrH() / 2;
 	if not moba and not moba.character then return end
 	local spells = moba.spells;
@@ -84,6 +84,7 @@ function GM:HUDPaint()
 	draw.DrawText(team.GetScore(TEAM_RED), "DermaLarge", (x * 1.1) + 2, (y / 8) + 2, Color(0, 0, 0), TEXT_ALIGN_CENTER)
 	draw.DrawText(team.GetScore(TEAM_RED), "DermaLarge", x * 1.1, y / 8, Color(255, 70, 70), TEXT_ALIGN_CENTER)
 end
+hook.Add("HUDPaint", "HLHS_Hud", HLHS_Paint)
 
 local wMat = Material("models/debug/debugwhite")
 local function RedDrawTarget()

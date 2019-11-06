@@ -10,6 +10,14 @@ PerkTranslate = {
 	["CDR"] = 4
 }
 
+HLHS_AccoladeList = {
+	["damage"] = true,
+	["kills"] = true,
+	["alyx_successfulhacks"] = true,
+	["dog_successfulballkills"] = true,
+	["metro_successfulstuns"] = true
+}
+
 function normalize(min, max, val) 
     local delta = max - min
     return (val - min) / delta

@@ -92,5 +92,6 @@ SPELL.OnCast	= function( ply, target )
 		local edata = EffectData()
 		edata:SetOrigin(ent:GetPos())
 		util.Effect("ManhackSparks", edata)
+		ply:AddAccolade("alyx_successfulhacks", 1)
 	end
 end

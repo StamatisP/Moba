@@ -65,6 +65,7 @@ CHARACTER.OnInitialize 	= function( ply )
 	ball:Spawn()
 	ball:Activate()
 	ball:SetOwner( ply )
+	ball:SetPhysicsAttacker(ply, 9999)
 	
 	ply.moba.pet[ball:EntIndex()] = ball
 	ply.ballindex = ball:EntIndex()

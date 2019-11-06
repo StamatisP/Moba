@@ -83,6 +83,15 @@ hook.Add("CalcMainActivity", "DogAnims", function(ply, vel)
 	end
 end)
 
+/*hook.Add("ShouldCollide", "HLHS_TeamClips", function(ent1, ent2)
+	if ent1:GetClass() == "hlhs_team_clip" and ent1.ShouldCollide then
+		print(ent1:ShouldCollide(ent2))
+		return ent1:ShouldCollide(ent2)
+	elseif ent2:GetClass() == "hlhs_team_clip" and ent2.ShouldCollide then
+		return ent2:ShouldCollide(ent1)
+	end
+end)*/
+
 hook.Add("DoAnimationEvent", "SpellAnims", function(ply, event, data)
 	ply:AnimRestartGesture(GESTURE_SLOT_CUSTOM, data, true)
 end)

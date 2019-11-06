@@ -1,8 +1,3 @@
-function GM:Initialize()
-	team.SetSpawnPoint(TEAM_BLUE, "hlhs_blue_start")
-	team.SetSpawnPoint(TEAM_RED, "hlhs_red_start")
-end
-
 function GM:PlayerInitialSpawn( ply )
 	ply:Initialize()
 	//ply:SetTeam(TEAM_BLUE)
@@ -41,26 +36,65 @@ function GM:PlayerSpawn( ply )
 	ply:SetupHands()
 end
 
-function GM:PlayerDeath( victim, inflictor, attacker )
-	if attacker:IsPlayer() then
-		print(attacker:Nick() .. " has killed " .. victim:Nick())
-	end
+/*function GM:PlayerDeath( victim, inflictor, attacker )
+	//if attacker:IsPlayer() then
+		//print(attacker:Nick() .. " has killed " .. victim:Nick())
+	//end
 	local char = victim:GetCharacterDetails();
 	if ( char ) then
 		char.OnDeath( victim );
 	end
 	victim.RespawnTime = CurTime() + 5
 
-	if not attacker:IsPlayer() and attacker:GetOwner() then attacker = attacker:GetOwner() end
+	if attacker:GetClass() == "ent_dog_ball" then
+		attacker:GetOwner():AddAccolade("dog_successfulballkills", 1)
+	end
+
+	if not attacker:IsPlayer() and attacker.GetOwner then attacker = attacker:GetOwner() end
 	if attacker == victim or attacker == game.GetWorld() then return end
+
 	char = attacker:GetCharacterDetails()
 	if not char then return end
 	char.OnKill(attacker, victim)
-	team.AddScore(attacker:Team(), 1)
-end
 
-function GM:ShouldCollide( ply, bot )
-	if ( IsValid( ent1 ) and IsValid( ent2 ) and ent1:IsPlayer() and ent2:IsPlayer() and ent1:Team() == ent2:Team()) then return false end
+	attacker:AddAccolade("kills", 1)
+
+	team.AddScore(attacker:Team(), 1)
+	
+	// send net message to player
+
+	net.Start("hlhs_PlayerKillPlayer")
+		net.WriteEntity( victim )
+		net.WriteString( inflictor:GetClass() )
+		net.WriteEntity( attacker )
+	net.Broadcast()
+	MsgAll(attacker:Nick() .. " killed " .. victim:Nick() .. " using " .. inflictor:GetClass() .. "\n" )
+end*/
+
+hook.Add("PlayerDeath", "HLHS_Death", function(victim, inflictor, attacker)
+	local victimchar = victim:GetCharacterDetails()
+	if ( victimchar ) then
+		victimchar.OnDeath( victim );
+	end
+	victim.RespawnTime = CurTime() + 5
+
+	if attacker:GetClass() == "ent_dog_ball" then
+		attacker:GetOwner():AddAccolade("dog_successfulballkills", 1)
+	end
+
+	if not attacker:IsPlayer() and attacker.GetOwner then attacker = attacker:GetOwner() end
+	local attackchar = attacker:GetCharacterDetails()
+	if not attackchar then return end
+	attackchar.OnKill(attacker, victim)
+
+	attacker:AddAccolade("kills", 1)
+
+	team.AddScore(attacker:Team(), 1)
+end)
+
+function GM:ShouldCollide( ent1, ent2 )
+	//if ( IsValid( ent1 ) and IsValid( ent2 ) and ent1:IsPlayer() and ent2:IsPlayer() and ent1:Team() == ent2:Team()) then return false end
+	// ,may be horribly broken
 
 	return true
 end
@@ -133,31 +167,15 @@ end
 
 hook.Add("EntityTakeDamage", "PreventTeamKill", function(target, dmginfo)
 	local attacker = dmginfo:GetAttacker()
-	if dmginfo:IsDamageType(DMG_FALL) or dmginfo:IsDamageType(DMG_CRUSH) then return end
+	//print(dmginfo:GetAttacker(), dmginfo:GetDamageType())
+	if (attacker == game.GetWorld()) and dmginfo:IsDamageType(DMG_FALL) or dmginfo:IsDamageType(DMG_CRUSH) then return end
+
 	if not attacker:IsPlayer() then attacker = attacker:GetOwner() end
-	if target:IsPlayer() and attacker then
+	if target:IsPlayer() and attacker:IsPlayer() then
 		if target:Team() == attacker:Team() then
 			return true
 		end
 		dmginfo:ScaleDamage(attacker.moba.mults[3])
+		attacker:AddAccolade("damage", dmginfo:GetDamage())
 	end
 end)
-
-/*function GM:Think()
-	for k, v in ipairs(player.GetAll()) do
-		if not v:Alive() then return end
-		local char = v:GetCharacterDetails()
-		if char then
-			if char.Name == "DOG" then
-				local move_dir = v:WorldToLocalAngles(v:GetVelocity():Angle())
-				local vel = v:GetVelocity():Length()
-				v:SetPoseParameter("move_yaw", move_dir.y)
-				if vel > 0 or math.abs(math.AngleDifference(v:GetAngles().y, v:EyeAngles().y)) > 60 then
-				    local angs = v:EyeAngles()
-				    angs.p = 0  
-				    v:SetAngles(angs)
-				end
-			end
-		end
-	end
-end*/
