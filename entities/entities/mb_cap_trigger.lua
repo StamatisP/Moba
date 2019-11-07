@@ -52,6 +52,7 @@ function ENT:AddProgress(team, mult)
 			for i = 1, num do
 				local ply = plys[i]
 				ply:PlayerVO("happy")
+				ply:AddAccolade("pointcaptures", 1)
 			end
 		end
 

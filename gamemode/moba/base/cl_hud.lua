@@ -89,12 +89,12 @@ hook.Add("HUDPaint", "HLHS_Hud", HLHS_Paint)
 local wMat = Material("models/debug/debugwhite")
 local function RedDrawTarget()
 	cam.Start3D()
-		render.SuppressEngineLighting(true)
+		
 
 		for k, v in pairs(player.GetAll()) do
 			if v == LocalPlayer() or not v:Alive() then continue end
-			if IsLookingAt(LocalPlayer(), v) then
-				if v:GetPos():DistToSqr(LocalPlayer():GetPos()) > 200 * 200 then continue end
+			if IsLookingAt(LocalPlayer(), v) and v:GetPos():DistToSqr(LocalPlayer():GetPos()) <= 200 * 200 then
+				render.SuppressEngineLighting(true)
 				render.MaterialOverride(wMat)
 				if v:Team() == TEAM_BLUE then
 					render.SetColorModulation(0, 0, 1)
@@ -103,10 +103,17 @@ local function RedDrawTarget()
 				end
 				v:DrawModel()
 				render.MaterialOverride(nil) // to fix renderview breaking
+				render.SuppressEngineLighting(false)
+			else
+				render.MaterialOverride(nil)
+				if v:Team() == TEAM_BLUE then
+					render.SetColorModulation(0.6, 0.6, 1)
+				else
+					render.SetColorModulation(1, 0.6, 0.6)
+				end
+				v:DrawModel()
 			end
 		end
-
-		render.SuppressEngineLighting(false)
 	cam.End3D()
 end
 

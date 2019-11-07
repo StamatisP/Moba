@@ -15,7 +15,8 @@ HLHS_AccoladeList = {
 	["kills"] = true,
 	["alyx_successfulhacks"] = true,
 	["dog_successfulballkills"] = true,
-	["metro_successfulstuns"] = true
+	["metro_successfulstuns"] = true,
+	["pointcaptures"] = true
 }
 
 function normalize(min, max, val) 

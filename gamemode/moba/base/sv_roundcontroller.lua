@@ -35,18 +35,35 @@ timer.Create("RoundCheckStart", 1, 0, function()
 end)
 
 function EndRound()
-	net.Start("mb_RoundEnd") // i could merge the two net messages and write an int but i dont wanna
-	net.Broadcast()
-	mb_RoundStatus = ROUND_END
-	if team.TotalFrags(TEAM_BLUE) > team.TotalFrags(TEAM_RED) then
+	local winning_team = nil
+	if team.GetScore(TEAM_BLUE) > team.GetScore(TEAM_RED) then
 		print("Blue team win!")
-	elseif team.TotalFrags(TEAM_RED) > team.TotalFrags(TEAM_BLUE) then
+		winning_team = TEAM_BLUE
+	elseif team.GetScore(TEAM_RED) > team.GetScore(TEAM_BLUE) then
 		print("Red team win!")
+		winning_team = TEAM_RED
 	else
 		print("Stalemate")
+		winning_team = 0
 	end
-	for k, v in ipairs(player.GetAll()) do
-		print(v:Name() .. " Accolades: ")
-		PrintTable(v.moba.accolades)
-	end
+
+	net.Start("mb_RoundEnd") // i could merge the two net messages and write an int but i dont wanna
+		net.WriteUInt(winning_team, 4) // what team won
+		local entries = 0
+		for k, v in ipairs(player.GetAll()) do
+			for k2, v2 in pairs(v.moba.accolades) do
+				entries = entries + 1
+			end
+		end
+		net.WriteUInt(entries, 32)
+		for k, v in ipairs(player.GetAll()) do
+			for k2, v2 in pairs(v.moba.accolades) do
+				print(v:UserID())
+				net.WriteUInt(v:UserID(), 8)
+				net.WriteString(k2)
+				net.WriteUInt(v2, 16)
+			end
+		end
+	net.Broadcast()
+	mb_RoundStatus = ROUND_END
 end

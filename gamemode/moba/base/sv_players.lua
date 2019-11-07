@@ -32,6 +32,7 @@ function GM:PlayerSpawn( ply )
 	ply:SetModel(char.Model)
 	ply:SetMaxHealth(char.Health * ply.moba.mults[1])
 	ply:SetHealth(char.Health * ply.moba.mults[1])
+	ply:SetColor(team.GetColor(ply:Team()))
 	char.OnInitialize(ply)
 	ply:SetupHands()
 end
@@ -78,13 +79,13 @@ hook.Add("PlayerDeath", "HLHS_Death", function(victim, inflictor, attacker)
 	end
 	victim.RespawnTime = CurTime() + 5
 
-	if attacker == victim then return end
+	if attacker == victim then return end // if suicide then dont do anything else
 
 	if attacker:GetClass() == "ent_dog_ball" then
 		attacker:GetOwner():AddAccolade("dog_successfulballkills", 1)
 	end
 
-	if not attacker:IsPlayer() and attacker:GetOwner() then attacker = attacker:GetOwner() end
+	if not attacker:IsPlayer() and attacker:GetOwner() then attacker = attacker:GetOwner() end // if the attacker is a pet then get the owner
 	local attackchar = attacker:GetCharacterDetails()
 	if not attackchar then return end
 	attackchar.OnKill(attacker, victim)
@@ -163,6 +164,9 @@ function GM:PlayerSay(sender, text, teamchat)
 		net.Start("mb_UpdateTokenCount")
 			net.WriteUInt(GetGlobalInt("UpgradeTokens", 0), 16)
 		net.Broadcast()
+		return ""
+	elseif text == "!endround" then
+		EndRound()
 		return ""
 	end
 end

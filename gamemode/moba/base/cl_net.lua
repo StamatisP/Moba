@@ -59,8 +59,22 @@ end
 net.Receive("mb_RoundStart", mb_RoundStart)
 
 local function mb_RoundEnd(len)
+	local tab = {}
+	tab["whowon"] = net.ReadUInt(4)	
+	tab.plyaccs = {}
+	local entries = net.ReadUInt(32)
+	for i = 1, entries do
+		local ply = {}
+		ply.userid = net.ReadUInt(8)
+		ply.acc = net.ReadString()
+		ply.val = net.ReadUInt(16)
+		table.insert(tab.plyaccs, ply)
+	end
+	PrintTable(tab)
+
 	hook.Run("mb_RoundEnd")
 	mb_RoundStatus = ROUND_END
+	CreateAccoladeList(tab)
 end
 net.Receive("mb_RoundEnd", mb_RoundEnd)
 

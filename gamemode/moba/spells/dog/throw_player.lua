@@ -2,7 +2,7 @@ SPELL.Name		= "Throw Player"
 SPELL.Icon		= ""
 SPELL.Range		= 200
 //SPELL.Sequence	= "canal5breact2" //What sequence/animation should it play
-SPELL.Cooldown	= 6
+SPELL.Cooldown	= 12
 
 SPELL.Description = "Grabs a player and throws them."
 
@@ -27,7 +27,8 @@ SPELL.CanCast = function(ply)
 end
 
 SPELL.OnCast	= function( ply, tgt )
-	if not ply then print("no ply!!") return end
+	local target = GetClosestPlayer(ply, 200)
+	if not ply and target then print("no ply or target!!") return end
 
 	target:SetPos(target:GetPos() + (Vector(0, 0, 60) ))
 	target:Freeze(true)
