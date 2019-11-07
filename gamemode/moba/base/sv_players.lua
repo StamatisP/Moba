@@ -78,11 +78,13 @@ hook.Add("PlayerDeath", "HLHS_Death", function(victim, inflictor, attacker)
 	end
 	victim.RespawnTime = CurTime() + 5
 
+	if attacker == victim then return end
+
 	if attacker:GetClass() == "ent_dog_ball" then
 		attacker:GetOwner():AddAccolade("dog_successfulballkills", 1)
 	end
 
-	if not attacker:IsPlayer() and attacker.GetOwner then attacker = attacker:GetOwner() end
+	if not attacker:IsPlayer() and attacker:GetOwner() then attacker = attacker:GetOwner() end
 	local attackchar = attacker:GetCharacterDetails()
 	if not attackchar then return end
 	attackchar.OnKill(attacker, victim)

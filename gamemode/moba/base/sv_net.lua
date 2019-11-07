@@ -2,9 +2,11 @@ local function mb_SendCharacterPick(len, ply)
 	local char = net.ReadString()
 	ply:Kill()
 	ply:SetCharacter(char)
-	local theteam = team.BestAutoJoinTeam()
-	ply:SetTeam(theteam)
-	print(ply:Nick() .. " has joined team " .. theteam)
+	if ply:Team() != TEAM_BLUE or ply:Team() != TEAM_RED then
+		local theteam = team.BestAutoJoinTeam()
+		ply:SetTeam(theteam)
+		print(ply:Nick() .. " has joined team " .. theteam)
+	end
 	ply:UnSpectate()
 	ply:Spawn()
 end
