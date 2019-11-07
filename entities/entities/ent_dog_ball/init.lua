@@ -26,8 +26,8 @@ function ENT:Think()
 end
 
 function ENT:OnRemove()
-	local owner = self:GetOwner();
-	if ( !owner ) then return; end
+	local owner = self:GetOwner()
+	if ( !owner ) then return end
 	
 	if not owner.moba then return end
 	owner.moba.pet[self:EntIndex()] = nil
@@ -67,9 +67,9 @@ function ENT:ReturnToOwner()
 
 		local dir = (pos - offset) * -1
 		if ( dist < 200 ) then
-			dir = dir * 2;
+			dir = dir * 2
 		elseif ( dist > 400 ) then
-			dir = dir * 1.6;
+			dir = dir * 1.6
 		end
 
 		phys:ApplyForceCenter(dir * 5)

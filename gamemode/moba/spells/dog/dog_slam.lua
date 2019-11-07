@@ -1,7 +1,7 @@
 SPELL.Name		= "Disruption"
 SPELL.Icon		= ""
 SPELL.Range		= 300
-//SPELL.Sequence	= "canal5breact2"; //What sequence/animation should it play
+//SPELL.Sequence	= "canal5breact2" //What sequence/animation should it play
 SPELL.Cooldown	= 1
 SPELL.Damage 	= 100
 SPELL.Ultimate = true

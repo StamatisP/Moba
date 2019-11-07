@@ -1,4 +1,4 @@
-ENT.Base			= "base_anim";
+ENT.Base			= "base_anim"
 
-ENT.PrintName		= "Medical-Kit";
-ENT.Author 			= "Brian Wynne";
+ENT.PrintName		= "Medical-Kit"
+ENT.Author 			= "Brian Wynne"

@@ -9,10 +9,10 @@ local circletab = {
 
 local function DrawSpellBox(spell, posx, posy)
 	// fuck it ill do it another time
-	local col = Color( 255, 255, 255, 255 );
+	local col = Color( 255, 255, 255, 255 )
 	
 	if ( moba.spells[ i ].cooldown > RealTime() ) then
-		col = Color( 160, 60, 60, 255 );
+		col = Color( 160, 60, 60, 255 )
 	end
 
 	// Spell name and shadow
@@ -28,13 +28,13 @@ local SpellKeybind = {
 }
 
 function HLHS_Paint()
-	local x, y = ScrW() / 2, ScrH() / 2;
+	local x, y = ScrW() / 2, ScrH() / 2
 	if not moba and not moba.character then return end
-	local spells = moba.spells;
+	local spells = moba.spells
 	
 	for i = 1, #spells do
-		local dist = i * 100;
-		dist = dist + (x * 0.65);
+		local dist = i * 100
+		dist = dist + (x * 0.65)
 
 		circletab[i]:SetPos(dist + 50, (y * 1.79) + 50)
 		circletab[i]:SetRadius(x * 0.05)
@@ -46,7 +46,7 @@ function HLHS_Paint()
 			circletab[i](Color(255, 0, 0))
 		end
 
-		draw.RoundedBox( 0, dist, y * 1.79, x * 0.10, y * 0.20, Color( 60, 60, 60, 120 ) );
+		draw.RoundedBox( 0, dist, y * 1.79, x * 0.10, y * 0.20, Color( 60, 60, 60, 120 ) )
 		
 		local spell_internal = MOBA.Characters[ moba.character ].Spells[i]
 
@@ -58,10 +58,10 @@ function HLHS_Paint()
 		end
 		//txt = string.gsub(txt, "^%l", string.upper)
 		//txt = PrettyPrintSpells(txt)
-		local col = Color( 255, 255, 255, 255 );
+		local col = Color( 255, 255, 255, 255 )
 		
 		if ( moba.spells[ i ].cooldown > RealTime() ) then
-			col = Color( 160, 60, 60, 255 );
+			col = Color( 160, 60, 60, 255 )
 		end
 
 		if not MOBA.Spells[spell_internal].Passive then
@@ -141,10 +141,10 @@ local function HideHUD( name )
 	local Tbl = { 
 	[ "CHudSecondaryAmmo" ] = true, 
 	[ "CHudBattery" ] = true,
-	}; 
+	} 
 	
 	if ( Tbl[ name ] ) then
-		return false;
+		return false
 	end
 end
-hook.Add( "HUDShouldDraw", "HeistHidHUD", HideHUD );
+hook.Add( "HUDShouldDraw", "HeistHidHUD", HideHUD )

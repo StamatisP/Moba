@@ -40,9 +40,9 @@ end
 	//if attacker:IsPlayer() then
 		//print(attacker:Nick() .. " has killed " .. victim:Nick())
 	//end
-	local char = victim:GetCharacterDetails();
+	local char = victim:GetCharacterDetails()
 	if ( char ) then
-		char.OnDeath( victim );
+		char.OnDeath( victim )
 	end
 	victim.RespawnTime = CurTime() + 5
 
@@ -74,7 +74,7 @@ end*/
 hook.Add("PlayerDeath", "HLHS_Death", function(victim, inflictor, attacker)
 	local victimchar = victim:GetCharacterDetails()
 	if ( victimchar ) then
-		victimchar.OnDeath( victim );
+		victimchar.OnDeath( victim )
 	end
 	victim.RespawnTime = CurTime() + 5
 

@@ -1,8 +1,8 @@
-SPELL.Name		= "Throw Ball";
-SPELL.Icon		= "";
-SPELL.Range		= 200;
-//SPELL.Sequence	= "canal5breact2"; //What sequence/animation should it play
-SPELL.Cooldown	= 5;
+SPELL.Name		= "Throw Ball"
+SPELL.Icon		= ""
+SPELL.Range		= 200
+//SPELL.Sequence	= "canal5breact2" //What sequence/animation should it play
+SPELL.Cooldown	= 5
 
 SPELL.Description = "Throws your ball " .. SPELL.Range .. " units."
 

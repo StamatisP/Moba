@@ -1,10 +1,10 @@
-local meta = FindMetaTable( "Player" );
-if ( !meta ) then return; end
+local meta = FindMetaTable( "Player" )
+if ( !meta ) then return end
 
 function meta:Initialize()
-	self.moba = {};
-		self.moba.character = "";
-		self.moba.spells = {}; //This is used for ONLY cooldowns
+	self.moba = {}
+		self.moba.character = ""
+		self.moba.spells = {} //This is used for ONLY cooldowns
 		self.moba.pet = {} // you can have multiple pets
 		self.moba.usedtokens = 0
 		self.moba.mults = {
@@ -17,38 +17,38 @@ function meta:Initialize()
 end
 
 function meta:SetCharacter( char )
-	if ( self.moba.character == char ) then return; end
+	if ( self.moba.character == char ) then return end
 	
-	self.moba.character = char;
+	self.moba.character = char
 	
-	net.Start( "mb_Char" );
-		net.WriteString( char );
-	net.Send( self );
+	net.Start( "mb_Char" )
+		net.WriteString( char )
+	net.Send( self )
 	
-	local char = self:GetCharacterDetails();
-	if ( !char ) then return; end
+	local char = self:GetCharacterDetails()
+	if ( !char ) then return end
 	
-	local spells = char.Spells;
-	local equipment = char.Equipment;
+	local spells = char.Spells
+	local equipment = char.Equipment
 	
-	net.Start( "mb_Spell" );
-		net.WriteTable( spells );
-	net.Send( self );
+	net.Start( "mb_Spell" )
+		net.WriteTable( spells )
+	net.Send( self )
 	
-	net.Start( "mb_Equip" );
-		net.WriteTable( equipment );
-	net.Send( self );
+	net.Start( "mb_Equip" )
+		net.WriteTable( equipment )
+	net.Send( self )
 end
 
 function meta:CastSpell( slot )
-	if ( (self.moba.spells[ slot ] && CurTime() < self.moba.spells[ slot ]) ) then return; end
+	if ( (self.moba.spells[ slot ] && CurTime() < self.moba.spells[ slot ]) ) then return end
 	if not self:Alive() then return end
-	local char = self:GetCharacterDetails();
-	local spell = char.Spells;
-	spell = MOBA.Spells[ spell[slot] ];
+	local char = self:GetCharacterDetails()
+	local spell = char.Spells
+	spell = MOBA.Spells[ spell[slot] ]
 	
-	if ( !spell ) then return; end
-	spell.OnCast( self, self:GetPos());
+	if ( !spell ) then return end
+	spell.OnCast( self, self:GetPos())
 	//print(slot)
 	//char.OnCast(spell)
 	
@@ -56,8 +56,8 @@ function meta:CastSpell( slot )
 end
 
 function meta:HasSpell( slot )
-	local char = self:GetCharacterDetails();
-	return char.Spells[ slot ];
+	local char = self:GetCharacterDetails()
+	return char.Spells[ slot ]
 end
 
 function meta:HasPassive(name)

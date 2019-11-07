@@ -137,17 +137,17 @@ hook.Add("StartCommand", "BotBehavior", function(ply, cmd)
 	end
 end)
 
-local meta = FindMetaTable( "Player" );
-if ( !meta ) then return; end
+local meta = FindMetaTable( "Player" )
+if ( !meta ) then return end
 
 function meta:GetCharacterDetails()
-	local char = self:GetCharacter();
-	if ( !MOBA.Characters[ char ] ) then return nil; end
+	local char = self:GetCharacter()
+	if ( !MOBA.Characters[ char ] ) then return nil end
 	
-	return MOBA.Characters[ char ];
+	return MOBA.Characters[ char ]
 end
 
 function meta:GetCharacter()
 	if not self.moba then return end
-	return self.moba.character;
+	return self.moba.character
 end

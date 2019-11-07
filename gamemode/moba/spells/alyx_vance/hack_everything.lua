@@ -1,8 +1,8 @@
-SPELL.Name		= "Hack Everything";
-SPELL.Icon		= "";
-SPELL.Range		= 450;
-//SPELL.Sequence	= "canal5breact2"; //What sequence/animation should it play
-SPELL.Cooldown	= 60;
+SPELL.Name		= "Hack Everything"
+SPELL.Icon		= ""
+SPELL.Range		= 450
+//SPELL.Sequence	= "canal5breact2" //What sequence/animation should it play
+SPELL.Cooldown	= 60
 SPELL.Ultimate = true
 
 SPELL.Description = "Hacks everything in a ".. SPELL.Range .. " unit radius."

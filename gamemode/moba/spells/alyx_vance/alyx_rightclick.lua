@@ -1,7 +1,7 @@
-SPELL.Name		= "Change \n Firemode \n(Right Click)";
-SPELL.Icon		= "";
-SPELL.Range		= 9000;
-//SPELL.Sequence	= "canal5breact2"; //What sequence/animation should it play
+SPELL.Name		= "Change \n Firemode \n(Right Click)"
+SPELL.Icon		= ""
+SPELL.Range		= 9000
+//SPELL.Sequence	= "canal5breact2" //What sequence/animation should it play
 SPELL.Cooldown	= 1
 SPELL.Passive = true
 

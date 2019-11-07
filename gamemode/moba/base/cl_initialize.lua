@@ -4,10 +4,10 @@ local m_failedCast = false
 local m_LastCastSpell = nil
 
 function GM:Initialize()
-	moba = {};
-		moba.character = "";
-		moba.spells = {};
-		moba.equipment = {};
+	moba = {}
+		moba.character = ""
+		moba.spells = {}
+		moba.equipment = {}
 		moba.usedtokens = 0
 		moba.mults = {
 			[1] = 1, // Health
@@ -29,18 +29,18 @@ function GM:InitPostEntity()
 end
 
 local function _castSpell(slot)
-	local spells = moba.spells;
-	if ( !spells[slot] || spells[slot].spell == "" || RealTime() < spells[slot].cooldown ) then return; end
+	local spells = moba.spells
+	if ( !spells[slot] || spells[slot].spell == "" || RealTime() < spells[slot].cooldown ) then return end
 	if not LocalPlayer():Alive() then return end
 	if isChatOpen then return end
 	
-	//PrintTable( spells[slot] );
-	local time = MOBA.Spells[ spells[slot].spell ].Cooldown;
-	if ( !time ) then return; end
+	//PrintTable( spells[slot] )
+	local time = MOBA.Spells[ spells[slot].spell ].Cooldown
+	if ( !time ) then return end
 	m_LastCastSpell = MOBA.Spells[ spells[slot].spell ]
 	
 	if m_LastCastSpell.CanCast(LocalPlayer()) and not m_LastCastSpell.Passive then
-		RunConsoleCommand( "mb_cast", slot );
+		RunConsoleCommand( "mb_cast", slot )
 		spells[slot].cooldown = RealTime() + (time / moba.mults[4])
 	else
 		if m_LastCastSpell.Passive then return end

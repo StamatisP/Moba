@@ -1,6 +1,6 @@
 ENT.Type 			= "anim"
 
-ENT.PrintName		= "Control Point";
+ENT.PrintName		= "Control Point"
 ENT.Author 			= "Whoever"
 
 function ENT:SetupDataTables()

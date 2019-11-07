@@ -1,8 +1,8 @@
-SPELL.Name		= "Hack";
-SPELL.Icon		= "";
-SPELL.Range		= 250;
-//SPELL.Sequence	= "canal5breact2"; //What sequence/animation should it play
-SPELL.Cooldown	= 15;
+SPELL.Name		= "Hack"
+SPELL.Icon		= ""
+SPELL.Range		= 250
+//SPELL.Sequence	= "canal5breact2" //What sequence/animation should it play
+SPELL.Cooldown	= 15
 
 SPELL.Description = "Hacks anything."
 

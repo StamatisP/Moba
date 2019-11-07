@@ -1,8 +1,8 @@
-SPELL.Name		= "City Scanner";
-SPELL.Icon		= "";
-SPELL.Range		= 600;
-//SPELL.Sequence	= "canal5breact2"; //What sequence/animation should it play
-SPELL.Cooldown	= 25;
+SPELL.Name		= "City Scanner"
+SPELL.Icon		= ""
+SPELL.Range		= 600
+//SPELL.Sequence	= "canal5breact2" //What sequence/animation should it play
+SPELL.Cooldown	= 25
 
 SPELL.Description = "Blinds enemies."
 

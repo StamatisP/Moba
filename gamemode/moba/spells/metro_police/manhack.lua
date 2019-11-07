@@ -1,8 +1,8 @@
-SPELL.Name		= "Manhack";
-SPELL.Icon		= "";
-SPELL.Range		= -1;
-SPELL.Sequence	= "canal5breact2"; //What sequence/animation should it play
-SPELL.Cooldown	= 8.1;
+SPELL.Name		= "Manhack"
+SPELL.Icon		= ""
+SPELL.Range		= -1
+SPELL.Sequence	= "canal5breact2" //What sequence/animation should it play
+SPELL.Cooldown	= 8.1
 
 SPELL.Description = "Spawns a Manhack pet that chases down enemies."
 
@@ -16,14 +16,14 @@ end
 SPELL.OnCast	= function( ply )
 	ply:EmitSound("npc/metropolice/vo/visceratordeployed.wav")
 	
-	local pos = ply:GetPos() + Vector( 0, 12, 64 );
-	pos = pos + ( ply:GetForward() * 12 );
+	local pos = ply:GetPos() + Vector( 0, 12, 64 )
+	pos = pos + ( ply:GetForward() * 12 )
 	
-	local manhack = ents.Create( "npc_manhack" );
-	manhack:SetPos( pos );
-	manhack:Spawn();
-	manhack:Activate();
-	manhack:SetOwner( ply );
+	local manhack = ents.Create( "npc_manhack" )
+	manhack:SetPos( pos )
+	manhack:Spawn()
+	manhack:Activate()
+	manhack:SetOwner( ply )
 	PetIgnoreOwnTeam(ply, manhack)
 	
 	ply.moba.pet[manhack:EntIndex()] = manhack
