@@ -94,6 +94,7 @@ end
 
 function meta:AddAccolade(key, value)
 	if not HLHS_AccoladeList[key] then ErrorNoHalt("Error, " .. key .. " is not a valid Accolade.") return end
+	if not value then value = 1 end
 	if not self.moba.accolades[key] then
 		self.moba.accolades[key] = value
 	else

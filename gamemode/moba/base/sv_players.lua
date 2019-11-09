@@ -84,12 +84,19 @@ hook.Add("PlayerDeath", "HLHS_Death", function(victim, inflictor, attacker)
 	if attacker:GetClass() == "ent_dog_ball" then
 		attacker:GetOwner():AddAccolade("dog_successfulballkills", 1)
 	end
+	if inflictor:GetClass() == "weapon_stunstick" and attacker:IsPlayer() then
+		attacker:AddAccolade("metro_successfulstuns", 1)
+	end
 
-	if not attacker:IsPlayer() and attacker:GetOwner() then attacker = attacker:GetOwner() end // if the attacker is a pet then get the owner
+	if not attacker:IsPlayer() then
+		if attacker:GetOwner() then attacker = attacker:GetOwner() end // if the attacker is a pet then get the owner
+		if attacker:GetClass() == "func_movelinear" then return end
+	end
 	local attackchar = attacker:GetCharacterDetails()
-	if not attackchar then return end
-	attackchar.OnKill(attacker, victim)
-
+	if attackchar then
+		attackchar.OnKill(attacker, victim)
+	end
+	
 	attacker:AddAccolade("kills", 1)
 
 	team.AddScore(attacker:Team(), 1)

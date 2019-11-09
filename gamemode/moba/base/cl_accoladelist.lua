@@ -3,7 +3,7 @@ local ratio = 1920 / ScrW()
 surface.CreateFont( "WinFont", {
 	font = "Trebuchet MS", -- Use the font-name which is shown to you by your operating system Font Viewer, not the file name
 	extended = false,
-	size = 32,
+	size = 64,
 	weight = 500,
 	blursize = 0,
 	scanlines = 0,
@@ -23,7 +23,9 @@ function AccoladeItem:Init()
 	self.bg = vgui.Create("DPanel", self)
 	self.bg:SetSize(1500 / ratio, 96 / ratio)
 	function self.bg:Paint(w, h)
+		DisableClipping(true)
 		draw.RoundedBox(8, 0, 0, w, h, Color(65, 65, 65))
+		DisableClipping(false)
 	end
 
 	self.avatar = vgui.Create("AvatarImage", self.bg)
@@ -55,7 +57,7 @@ local AccoladePrettifier = {
 	["pointcaptures"] = "%s captured %u points!",
 	["alyx_successfulhacks"] = "%s hacked %u things as Alyx!",
 	["dog_successfulballkills"] = "%s crushed %u people with their Ball as Dog!",
-	["metro_successfulstuns"] = "%s delivered punishment to %u people as Metro Cop!",
+	["metro_successfulstuns"] = "%s delivered percussive punishment to %u people as Metro Cop!",
 }
 
 function CreateAccoladeList(acctab)
@@ -63,23 +65,24 @@ function CreateAccoladeList(acctab)
 	dframe:SetTitle("End of Round")
 	dframe:SetPos(90, 60)
 	dframe:SetSize(1700 / ratio, 1000 / ratio)
+	dframe:DockPadding(100, 96, 100, 96)
 	dframe:Center()
 
 	local winlabel = vgui.Create("DLabel", dframe)
 	winlabel:SetFont("WinFont")
 	if acctab["whowon"] == TEAM_BLUE then
 		winlabel:SetText("Blue Team Victory!")
-		winlabel:SetColor(Color(90, 90, 255))
+		winlabel:SetColor(Color(100, 100, 255))
 	elseif acctab["whowon"] == TEAM_RED then
 		winlabel:SetText("Red Team Victory!")
 		winlabel:SetColor(Color(255, 90, 90))
 	else
 		winlabel:SetText("Stalemate!")
-		winlabel:SetColor(Color(90, 90, 90))
+		winlabel:SetColor(Color(100, 100, 90))
  	end
  	winlabel:SizeToContents()
-	winlabel:Dock(TOP)
-	winlabel:CenterVertical()
+ 	winlabel:SetPos(0, 40)
+ 	winlabel:CenterHorizontal()
 
 	local scroll = vgui.Create("DScrollPanel", dframe)
 	scroll:Dock(FILL)
@@ -91,9 +94,9 @@ function CreateAccoladeList(acctab)
 
 	for i = 1, #acctab.plyaccs do
 		local item = accoladelist:Add("DAccoladeItem")
+		print(scroll:GetWide())
 		item:SetSize(1500 / ratio, 96 / ratio)
 		item:SetPlayer(Player(acctab.plyaccs[i].userid), 64)
-		//item:SetText(acctab.plyaccs[i].acc .. " " .. acctab.plyaccs[i].val)
 		item:SetText(string.format(AccoladePrettifier[acctab.plyaccs[i].acc], Player(acctab.plyaccs[i].userid):Nick(), acctab.plyaccs[i].val))
 	end
 end

@@ -52,13 +52,13 @@ function EndRound()
 		local entries = 0
 		for k, v in ipairs(player.GetAll()) do
 			for k2, v2 in pairs(v.moba.accolades) do
+				// in the future, just get a random accolade from the player and write that instead, 1 accolade per player
 				entries = entries + 1
 			end
 		end
 		net.WriteUInt(entries, 32)
 		for k, v in ipairs(player.GetAll()) do
 			for k2, v2 in pairs(v.moba.accolades) do
-				print(v:UserID())
 				net.WriteUInt(v:UserID(), 8)
 				net.WriteString(k2)
 				net.WriteUInt(v2, 16)
