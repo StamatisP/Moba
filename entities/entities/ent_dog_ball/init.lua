@@ -69,8 +69,9 @@ function ENT:ReturnToOwner()
 		if ( dist < 200 ) then
 			dir = dir * 2
 		elseif ( dist > 400 ) then
-			dir = dir * 1.6
+			dir = dir * 1.4
 		end
+		dir.z = dir.z * 2
 
 		phys:ApplyForceCenter(dir * 5)
 	end)

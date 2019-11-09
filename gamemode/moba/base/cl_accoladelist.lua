@@ -63,9 +63,9 @@ local AccoladePrettifier = {
 function CreateAccoladeList(acctab)
 	local dframe = vgui.Create("DFrame")
 	dframe:SetTitle("End of Round")
-	dframe:SetPos(90, 60)
+	dframe:SetPos(90 / ratio, 60 / ratio)
 	dframe:SetSize(1700 / ratio, 1000 / ratio)
-	dframe:DockPadding(100, 96, 100, 96)
+	dframe:DockPadding(100 / ratio, 96 / ratio, 100 / ratio, 96 / ratio)
 	dframe:Center()
 
 	local winlabel = vgui.Create("DLabel", dframe)
@@ -81,7 +81,7 @@ function CreateAccoladeList(acctab)
 		winlabel:SetColor(Color(100, 100, 90))
  	end
  	winlabel:SizeToContents()
- 	winlabel:SetPos(0, 40)
+ 	winlabel:SetPos(0, 40 / ratio)
  	winlabel:CenterHorizontal()
 
 	local scroll = vgui.Create("DScrollPanel", dframe)

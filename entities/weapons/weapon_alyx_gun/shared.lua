@@ -81,12 +81,15 @@ function SWEP:ShootBullet()
 	if self:GetMode() == SMG_MODE then
 		bullet.Spread 	  = Vector(spread, spread, 1)
 		bullet.Damage	  = self.Primary.Damage
+		self:TakePrimaryAmmo( 1 )
 	elseif self:GetMode() == PISTOL_MODE then
 		bullet.Spread 	  = Vector(0.01, 0.01, 0.01)
 		bullet.Damage	  = self.Primary.Damage * 2
+		self:TakePrimaryAmmo( 2 )
 	elseif self:GetMode() == RIFLE_MODE then
 		bullet.Spread 	  = Vector(0, 0, 0)
 		bullet.Damage	  = self.Primary.Damage * 4
+		self:TakePrimaryAmmo( 4 )
 	end
 	
 	recoil = Angle( math.Rand(-recoil, 0), math.Rand(-recoil, recoil), math.Rand(-0.2, 0.2) )
@@ -95,7 +98,6 @@ function SWEP:ShootBullet()
 	self.Owner:ViewPunch( recoil )
 	self.Owner:FireBullets( bullet )
 	self:ShootEffects()
-	self:TakePrimaryAmmo( 1 )
 end
 
 function SWEP:SecondaryAttack()

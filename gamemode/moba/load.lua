@@ -78,6 +78,16 @@ local function loadCoreGame( dir )
 	
 end
 
+local function PrecacheVO(table)
+	for k, v in pairs(table) do
+		if type(v) == "table" then
+			PrecacheVO(v)
+		else
+			util.PrecacheSound(v)
+		end
+	end
+end
+
 local function loadCharacters( dir )
 	
 	for k, v in pairs( file.Find( dir .. "/*.lua", "LUA" ) ) do
@@ -87,6 +97,7 @@ local function loadCharacters( dir )
 			AddCSLuaFile( "characters/" .. v ) 
 		end
 		include( "characters/" .. v )
+		PrecacheVO(CHARACTER.VoiceOver)
 		
 		local class = string.gsub( v, ".lua", "" )
 		
