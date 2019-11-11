@@ -2,7 +2,7 @@ SPELL.Name		= "Manhack"
 SPELL.Icon		= ""
 SPELL.Range		= -1
 SPELL.Sequence	= "canal5breact2" //What sequence/animation should it play
-SPELL.Cooldown	= 8.1
+SPELL.Cooldown	= 10
 
 SPELL.Description = "Spawns a Manhack pet that chases down enemies."
 
@@ -24,9 +24,12 @@ SPELL.OnCast	= function( ply )
 	manhack:Spawn()
 	manhack:Activate()
 	manhack:SetOwner( ply )
+	manhack:SetHealth(manhack:Health() * 2)
 	PetIgnoreOwnTeam(ply, manhack)
 	
 	ply.moba.pet[manhack:EntIndex()] = manhack
+	manhack:SetColor(team.GetColor(ply:Team()))
+	manhack:SetRenderMode(RENDERMODE_TRANSCOLOR)
 	timer.Simple(16, function()
 		if IsValid(manhack) then
 			manhack:TakeDamage(999, ply, ply)

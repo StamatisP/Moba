@@ -18,7 +18,7 @@ SPELL.OnCast	= function( ply )
 	//ply:StartAnimation(MOBA.Spells["manhack_swarm"].Sequence, false, nil, true)
 	ply:DoCustomAnimEvent(PLAYERANIMEVENT_CUSTOM, ACT_GMOD_GESTURE_BECON)
 	ply:EmitSound("/npc/metropolice/takedown.wav", 0)
-	for i = 1, 15 do
+	for i = 1, 6 do
 		timer.Simple(math.Rand(0, 1.5), function()
 			local pos = ply:GetPos() + Vector( math.random(-59, 50), math.random(-50, 50), math.random(20, 150) )
 			pos = pos + ( ply:GetForward() * 12 )
@@ -28,11 +28,12 @@ SPELL.OnCast	= function( ply )
 			manhack:Spawn()
 			manhack:Activate()
 			manhack:SetOwner( ply )
+			manhack:SetHealth(manhack:Health() * 3)
 			PetIgnoreOwnTeam(ply, manhack)
 			
-			timer.Simple(math.Rand(15, 17), function()
+			timer.Simple(math.Rand(18, 22), function()
 				if IsValid(manhack) then
-					manhack:TakeDamage(999, ply, ply)
+					manhack:TakeDamage(9999, ply, ply)
 				end
 			end)
 		end)

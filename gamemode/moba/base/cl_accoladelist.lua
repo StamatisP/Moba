@@ -23,9 +23,7 @@ function AccoladeItem:Init()
 	self.bg = vgui.Create("DPanel", self)
 	self.bg:SetSize(1500 / ratio, 96 / ratio)
 	function self.bg:Paint(w, h)
-		DisableClipping(true)
 		draw.RoundedBox(8, 0, 0, w, h, Color(65, 65, 65))
-		DisableClipping(false)
 	end
 
 	self.avatar = vgui.Create("AvatarImage", self.bg)
@@ -66,6 +64,7 @@ function CreateAccoladeList(acctab)
 	dframe:SetPos(90 / ratio, 60 / ratio)
 	dframe:SetSize(1700 / ratio, 1000 / ratio)
 	dframe:DockPadding(100 / ratio, 96 / ratio, 100 / ratio, 96 / ratio)
+	dframe:SetMouseInputEnabled(true)
 	dframe:Center()
 
 	local winlabel = vgui.Create("DLabel", dframe)

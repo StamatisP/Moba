@@ -2,7 +2,7 @@ SPELL.Name		= "Hack Everything"
 SPELL.Icon		= ""
 SPELL.Range		= 450
 //SPELL.Sequence	= "canal5breact2" //What sequence/animation should it play
-SPELL.Cooldown	= 60
+SPELL.Cooldown	= 70
 SPELL.Ultimate = true
 
 SPELL.Description = "Hacks everything in a ".. SPELL.Range .. " unit radius."
@@ -58,6 +58,7 @@ SPELL.OnCast	= function( ply, target )
 			else
 				PetIgnoreOwnTeam(ply, ent)
 				ent:SetHealth(ent:Health() * 2)
+				ent:SetColor(team.GetColor(ply:Team()))
 			end
 		end
 

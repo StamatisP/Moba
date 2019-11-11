@@ -166,7 +166,7 @@ function GM:PlayerSay(sender, text, teamchat)
 		SetGlobalBool("botmove", true)
 		return ""
 	elseif text == "!testtokens" then
-		SetGlobalInt("UpgradeTokens", 20)
+		SetGlobalInt("UpgradeTokens", 100)
 		print("New Upgrade Tokens: " .. GetGlobalInt("UpgradeTokens", 0))
 		net.Start("mb_UpdateTokenCount")
 			net.WriteUInt(GetGlobalInt("UpgradeTokens", 0), 16)
